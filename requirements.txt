@@ -1,0 +1,5 @@
+# LiveKit Agents SDK + plugins
+livekit>=1.0
+livekit-agents[deepgram,google,cartesia,silero,turn-detector]~=1.0
+livekit-plugins-noise-cancellation~=0.2
+python-dotenv~=1.0

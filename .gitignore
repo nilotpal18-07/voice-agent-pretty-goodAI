@@ -1,0 +1,39 @@
+# --- Secrets / environment ---
+.env
+.env.local
+.env.*.local
+*.env
+# ...but always track the template
+!.env.example
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.eggs/
+build/
+dist/
+
+# --- Virtual environments ---
+venv/
+.venv/
+env/
+ENV/
+
+# --- Tooling caches ---
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# --- IDE / OS ---
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# --- Agent tooling (installed skills / agent configs) ---
+.agents/
+.claude/
+outbound-trunk.json
+skills-lock.json
