@@ -1,0 +1,28 @@
+# Transcript - call-03-scheduling
+# Room: room-J88pDDZv94TD
+# Recorded: 2026-06-26T03:54:48
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to schedule a routine annual check-up.
+AGENT (clinic): Would you like to create a demo patient profile first
+AGENT (clinic): I just need your first and mock name to get started.
+PATIENT (bot): My name is Alex Carter. I'm actually an existing patient.
+AGENT (clinic): Your patient profile is set up. And your date of birth is July fourth two thousand for demo purposes. How could I help you today?
+PATIENT (bot): Okay, great. I'm calling to book a routine annual check-up. I'm hoping to get something next week, ideally
+AGENT (clinic): Just to confirm, you'd like to book a general office visit for your routine annual checkup.
+PATIENT (bot): Yes,
+AGENT (clinic): Is that correct?
+PATIENT (bot): That's correct.
+AGENT (clinic): Do you have a specific provider you'd like to see or are you open to the first available?
+PATIENT (bot): I'm open to the first available.
+AGENT (clinic): It looks like you already have a routine annual checkup appointment booked. If you'd like, I can help you reschedule or cancel it.
+PATIENT (bot): Oh,
+AGENT (clinic): Would you like to make a change to your existing appointment?
+PATIENT (bot): I don't think I have one booked. Could you tell me the date of it? My date of
+AGENT (clinic): I see. Since the system shows an existing appointment for your annual checkup,
+PATIENT (bot): birth
+AGENT (clinic): I can connect you to a live team member to review and help sort this out.
+AGENT (clinic): Would you like me to transfer you now?
+PATIENT (bot): Yes, please, that would be great. My date of birth is March 14, 1990, if that helps them find anything.
+AGENT (clinic): Connecting you to a representative. Please wait.
+AGENT (clinic): Hello. You've reached the Pretty Good AI test line. Goodbye.

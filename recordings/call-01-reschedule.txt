@@ -1,0 +1,33 @@
+# Transcript - call-01-reschedule
+# Room: room-7ZQsuwHqXswm
+# Recorded: 2026-06-26T03:30:52
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to see if I can reschedule an existing appointment.
+AGENT (clinic): I can help with that.
+AGENT (clinic): Would you like to create a demo patient profile first?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Oh, I'm already an existing patient. My name is Jordan Blake.
+AGENT (clinic): Thanks for letting me know. Jordan,
+AGENT (clinic): to help you reschedule, I'll need to create a demo patient profile for you here.
+AGENT (clinic): Can I get your last name as well?
+PATIENT (bot): It's Blake. B-L-A-K-E.
+AGENT (clinic): One moment while I set up your profile so I can help with your appointment.
+PATIENT (bot): Okay, thanks. I
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How can I help you today?
+PATIENT (bot): My date of birth is actually July 2nd, 1985. I'm calling because I need to reschedule my appointment that's this Thursday at 2 PM with Dr. Patel. Something came up at work.
+AGENT (clinic): I see an upcoming appointment for you on Monday. July sixth at nine thirty AM with doctor Zigbenu Lukowski at Nashville two two zero Athens Way.
+AGENT (clinic): I don't see an appointment for this Thursday at two PM with doctor Patel. Would you like to reschedule the Monday, July sixth appointment or is there another appointment you're referring to?
+PATIENT (bot): No, I'm definitely talking about an appointment this Thursday at 2 PM with Dr. Patel. Are you sure you're looking at the right patient
+AGENT (clinic): I only see one upcoming appointment for you, which is on Monday, July sixth, at nine thirty AM with doctor Zidbignew Lukowski.
+AGENT (clinic): There isn't an appointment listed for this Thursday at two PM with doctor Patel. It possible the appointment you're thinking of is under a different name or phone number?
+AGENT (clinic): Or would you like to reschedule the July sixth appointment?
+PATIENT (bot): No, that's not right. I definitely have an appointment with Dr. Patel
+AGENT (clinic): I understand this is frustrating. I'm only able to see the July sixth appointment with doctor Wikoski for you. Would you like to reschedule that one, or would you prefer to speak with someone from the clinic who can look into this further?
+PATIENT (bot): Let me just double-check my calendar. Okay, I just checked, and it's definitely this
+AGENT (clinic): Take your time.
+AGENT (clinic): Let me know what you find.
+AGENT (clinic): Or how you'd like to proceed.
+PATIENT (bot): Okay, I just double-checked and I definitely have an appointment this Thursday at 2 PM with Dr. Patel. I need to reschedule that one to early next week, late afternoon if possible.
+AGENT (clinic): Thanks for checking.

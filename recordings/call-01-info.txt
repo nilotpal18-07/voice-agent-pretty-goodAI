@@ -1,0 +1,13 @@
+# Transcript - call-01-info
+# Room: room-PiEtfyoPiVb2
+# Recorded: 2026-06-26T03:41:53
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to ask a few quick questions. Could you tell me what your weekend hours are?
+AGENT (clinic): I don't have the clinic's weekend hours available right now. Would you like to create a demo patient profile? That way I can help you with more details and services.
+AGENT (clinic): It only takes a moment.
+PATIENT (bot): Oh, I just have a quick question about your hours. Is there someone else who might know them?
+AGENT (clinic): I can connect you to our clinic support team for more information about weekend hours, Please stay on the line while I transfer your call.
+PATIENT (bot): Okay,
+AGENT (clinic): Connecting you to a representative.
+AGENT (clinic): Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye.

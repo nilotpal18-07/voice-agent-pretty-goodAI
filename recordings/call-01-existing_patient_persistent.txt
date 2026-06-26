@@ -1,0 +1,33 @@
+# Transcript - call-01-existing_patient_persistent
+# Room: room-YCi7FXnDo6QJ
+# Recorded: 2026-06-26T03:06:32
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm Alex Carter. I'm calling to book a routine check-up.
+AGENT (clinic): Hi, Alex. Would you like to create a demo patient profile so I can help you book your checkup? I just need your first and last name to get started.
+PATIENT (bot): Oh, I'm already an existing patient. I've been coming here for years. Can you just look me up by my name and date of birth instead?
+AGENT (clinic): Right now, I can only assist if you create a demo patient profile. Would you like to set one up?
+PATIENT (bot): I'm
+AGENT (clinic): I just need your first and last name
+PATIENT (bot): No, I'm really sure I'm in the system. Alex Carter, born March 14, 1990. My phone number and insurance should already be on file. Could you please just try looking me up with that? I really don't want to create a new profile.
+AGENT (clinic): I understand Alex, At the moment, I can only help if you create a demo patient profile. If you prefer not to, you can scan the QR code at the booth later to set up your profile.
+AGENT (clinic): Let me know if you'd like to continue or if you have any other questions.
+PATIENT (bot): Okay, fine. I guess I'll set up a demo patient profile then. My name is Alex Carter.
+AGENT (clinic): Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Okay, I'm calling to book a routine check-up. I'm available weekday mornings next week.
+AGENT (clinic): Just to confirm, you'd like to schedule a general office visit for a routine checkup?
+PATIENT (bot): Yes,
+AGENT (clinic): Is that correct?
+PATIENT (bot): Yes, that's correct. A routine check-up.
+AGENT (clinic): Do you have a preferred provider for your checkup, or would you like to see the first available?
+PATIENT (bot): No, I don't have a preference. Whoever is first available is fine.
+AGENT (clinic): Let me check the first available time for a routine checkup. One moment. It looks like you already have a routine checkup appointment booked. If you'd like, I can help you reschedule or cancel it. Would you like to make a change to your existing appointment?
+PATIENT (bot): Oh, I already have one? When is it?
+AGENT (clinic): Yes. You already have a routine checkup appointment on file. Would you like to reschedule or cancel it? Or do you want to keep your current appointment?
+PATIENT (bot): I'm not seeing the date of that appointment on this demo profile. It's really important that we're looking at my actual patient file, since
+AGENT (clinic): I don't have access to the exact date of your existing appointment. You'd like, I can connect you with live support so they can provide the details or help you make changes.
+AGENT (clinic): Would you like to be transferred?
+PATIENT (bot): Yes, please transfer me to live support so I can get the details of my existing appointment and make sure we're looking at the right file.
+AGENT (clinic): It looks like you'd like to book a routine checkup. One moment while I get that started for you.
+PATIENT (bot): I asked to be transferred to live support. It seems like this isn't getting resolved. I'm going to end the call now. Thank you.

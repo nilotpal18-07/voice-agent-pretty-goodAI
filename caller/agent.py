@@ -2,8 +2,8 @@
 
 Inverts the LiveKit `outbound-caller-python` example: instead of being the
 clinic's assistant, this bot is a *patient* that calls a healthcare voice agent
-at a test line, lets that agent speak first, then plays a patient trying to book
-a routine appointment.
+at a test line, lets that agent speak first, then plays one of several patient
+scenarios (selected via the SCENARIO_ID env var) from ``scenarios/scenarios.py``.
 
 Pipeline (text-LLM, NOT speech-to-speech):
     Deepgram STT -> google.LLM(gemini-2.5-flash) -> Cartesia TTS
@@ -49,6 +49,12 @@ from livekit.plugins import (
     noise_cancellation,
 )
 
+from scenarios.scenarios import (
+    DEFAULT_SCENARIO_ID,
+    build_instructions,
+    get_scenario,
+)
+
 # Read credentials from .env (LiveKit, Deepgram, Google, Cartesia, SIP trunk).
 load_dotenv()
 
@@ -61,10 +67,12 @@ logger.setLevel(logging.INFO)
 AGENT_PHONE_NUMBER = "+18054398008"
 # Identity assigned to the dialed SIP participant (the clinic's agent).
 SIP_PARTICIPANT_IDENTITY = "clinic-agent"
-# Scenario name for this run. Kept as a variable (not baked into the label) so
-# future scenarios each get their own numbered series, e.g. call-02-scheduling,
-# call-01-intake, call-01-billing.
-SCENARIO = "scheduling"
+# Which patient scenario to run this call. Selected via the SCENARIO_ID env var
+# (e.g. `SCENARIO_ID=refill python -m caller.agent dev`), defaulting to the
+# routine-scheduling persona. The scenario's id becomes the transcript label
+# suffix, so files read like call-03-refill.txt.
+SCENARIO_ID = os.getenv("SCENARIO_ID", DEFAULT_SCENARIO_ID)
+SCENARIO = get_scenario(SCENARIO_ID)
 RECORDINGS_DIR = Path(__file__).resolve().parent.parent / "recordings"
 
 # Outbound SIP trunk (LiveKit, backed by Telnyx). Read from env, never hardcoded.
@@ -111,52 +119,17 @@ def next_call_label(scenario: str, recordings_dir: Path) -> str:
     return label
 
 
-# One fixed patient scenario for this step. The bot steers toward booking a
-# routine check-up next week, speaks naturally, and does NOT read a script.
-PATIENT_INSTRUCTIONS = """
-You are Alex Carter, a PATIENT making an OUTBOUND phone call TO a medical clinic.
-You are the CALLER. The other party is the clinic's staff/receptionist (which may
-be an automated voice agent). This is a real phone call and your words are spoken
-aloud, so talk like a normal person on the phone: short, natural turns, a little
-informal, never scripted.
-
-CRITICAL ROLE — you are the patient, NOT the clinic:
-- You called the clinic. You did NOT answer the phone, and you are NOT the
-  receptionist or clinic staff.
-- NEVER greet as the clinic. NEVER say "thanks for calling" / "thank you for
-  calling", "how can I help you", "how may I assist you", or anything that offers
-  help — you are the one asking for help, not giving it.
-- NEVER introduce yourself as the clinic or with a receptionist name. Your name is
-  Alex Carter and it stays the same for the entire call. Do not invent other names.
-
-YOUR GOAL: book a routine check-up (general physical) for sometime next week.
-Drive the conversation toward getting that appointment booked, and answer the
-clinic's questions to move it forward. If things drift, steer back to booking.
-
-HOW TO BEHAVE:
-- Do NOT speak first. Wait for the clinic to speak. When they greet you OR play an
-  automated notice (e.g. "this call may be recorded"), respond AS THE CALLER —
-  for example: "Hi, I'd like to book a routine check-up, please."
-- Keep each reply short, like real phone speech. Don't monologue or over-explain.
-- Answer questions naturally and stay consistent. Use this profile:
-    - Name: Alex Carter
-    - Date of birth: March 14, 1990
-    - Reason for visit: routine annual check-up, nothing urgent
-    - Availability: any weekday next week, mornings preferred
-    - Existing patient, has insurance (invent plausible details if pressed)
-- If they offer a time that works, accept it and confirm the details back.
-- Once the appointment is booked (or it's clear it can't be), briefly thank them
-  and use the end_call tool to hang up.
-- If you reach a voicemail or automated menu instead of a person, use the
-  detected_answering_machine tool.
-"""
+# System prompt for the selected scenario. build_instructions() always layers the
+# scenario's persona/goal/facts/behavior on top of the invariant role rules (the
+# bot is the CALLER, never the clinic receptionist).
+PATIENT_INSTRUCTIONS = build_instructions(SCENARIO)
 
 
 class PatientCaller(Agent):
-    """The patient. Listens first, then steers toward booking the appointment."""
+    """The patient. Listens first, then pursues the scenario's goal as a caller."""
 
-    def __init__(self) -> None:
-        super().__init__(instructions=PATIENT_INSTRUCTIONS)
+    def __init__(self, instructions: str = PATIENT_INSTRUCTIONS) -> None:
+        super().__init__(instructions=instructions)
 
     async def hangup(self) -> None:
         """Hang up by deleting the room. No-ops outside a running job (e.g. tests)."""
@@ -187,9 +160,12 @@ async def entrypoint(ctx: JobContext) -> None:
     logger.info(f"connecting to room {ctx.room.name}")
     await ctx.connect()
 
+    logger.info(f"scenario: {SCENARIO.id} — {SCENARIO.title}")
+
     # Reserve a unique, non-overwriting label for this call up front (atomic, so
-    # concurrent calls in a batch run never collide on the same file).
-    call_label = next_call_label(SCENARIO, RECORDINGS_DIR)
+    # concurrent calls in a batch run never collide on the same file). The
+    # scenario id is the label suffix, so files read like call-03-refill.txt.
+    call_label = next_call_label(SCENARIO.id, RECORDINGS_DIR)
     logger.info(f"call label: {call_label} (room {ctx.room.name})")
 
     # Text-LLM pipeline (not a realtime/speech-to-speech model). The LiveKit

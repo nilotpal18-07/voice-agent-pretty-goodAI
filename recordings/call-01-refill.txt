@@ -1,0 +1,29 @@
+# Transcript - call-01-refill
+# Room: room-sAkKZNkhvRAc
+# Recorded: 2026-06-26T03:47:26
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to request a prescription refill.
+AGENT (clinic): I can help with that.
+PATIENT (bot): Great,
+AGENT (clinic): Would you like to create a demo patient profile so I can assist you with your prescription refill?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): My name is Sam Rivera.
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand. How may I help you today?
+PATIENT (bot): Actually, my date of birth is November 9, 1978. I need a refill for my lisinopril, 10 mg.
+AGENT (clinic): Thanks for letting me know. For this refill, can you confirm that you need lisinopril ten milligrams?
+PATIENT (bot): Yes, that's correct. Lisinopril 10 mg.
+AGENT (clinic): How many days of lisinopril do you have left?
+AGENT (clinic): If you are already out, just let me know.
+PATIENT (bot): I'm running low, I have about one refill left.
+AGENT (clinic): Just to clarify, how many days of medication do you have left before you run out?
+PATIENT (bot): Oh,
+AGENT (clinic): An estimate is fine,
+PATIENT (bot): Probably about a week's worth. Maybe a little more.
+AGENT (clinic): Got it.
+AGENT (clinic): I'll note that you have about seven days left. Can you confirm the best phone number for a callback? I have your number as five two zero two one four three nine five eight. Is that correct?
+PATIENT (bot): Yes, that's my number.
+AGENT (clinic): Could you please provide the name of the pharmacy you want to use for your medication?
+AGENT (clinic): If you know the address, city, or any details, like cross streets or nearby stores, that would help too.
+PATIENT (bot): It's Walgreens on 5th Avenue.
+AGENT (clinic): Thanks.

@@ -1,0 +1,39 @@
+# Transcript - call-01-out_of_scope
+# Room: room-jS6JJJdpaibJ
+# Recorded: 2026-06-26T03:36:29
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to see about booking an appointment, please. Ideally for this Sunday.
+AGENT (clinic): I can help with that. Before we get started, would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): My name is Riley Morgan.
+AGENT (clinic): Your patient profile is set up.
+PATIENT (bot): Great,
+AGENT (clinic): And your date of birth is July fourth two thousand.
+AGENT (clinic): How can I help you today?
+PATIENT (bot): Oh, actually, my date of birth is February 20, 1995. And I was hoping to get a full-body MRI scan done.
+AGENT (clinic): Thanks for clarifying.
+AGENT (clinic): I have your date of birth as February twentieth nineteen ninety five.
+PATIENT (bot): Perfect.
+AGENT (clinic): What is the main reason for your visit?
+AGENT (clinic): For example, is this a routine checkup, a new patient consultation, or something else?
+PATIENT (bot): I'm hoping to get a full-body MRI. Is that something you do there?
+AGENT (clinic): For sharing that.
+AGENT (clinic): Just to clarify, are you looking to discuss the MRI with a provider first, or do you already have an order and just need to schedule the procedure?
+PATIENT (bot): I don't have an order right now. I was hoping to get one from a doctor there.
+AGENT (clinic): Understood.
+AGENT (clinic): Since you don't have an order yet, you'll need to see a provider first. Would you like to book a general office visit to discuss the MRI and get an order if appropriate?
+PATIENT (bot): Okay, that makes sense. And can I still get that appointment this Sunday?
+AGENT (clinic): It looks like you already have an office visit appointment booked. If you want, I can help you reschedule or cancel your current appointment or connect you with live support for more help.
+AGENT (clinic): What would you like to do?
+PATIENT (bot): I'm sorry, we're closed on Sundays. Would you like to check for another day? And just
+AGENT (clinic): No problem. Would you like to look for the next available appointment on another day? Or do you want to make changes to your current booking?
+PATIENT (bot): Okay, I understand you're closed on Sundays. That's fine. What about Monday then?
+AGENT (clinic): Would you like to see what appointments are available early next week?
+AGENT (clinic): Or do you wanna keep your current appointment as is?
+PATIENT (bot): Yes, let's see what's available for a general office visit on Monday.
+AGENT (clinic): Since you already have an office visit booked, I'm unable to schedule another one for you. Would you like to reschedule your current appointment to Monday?
+AGENT (clinic): Or would you prefer to speak with live support for more options?
+PATIENT (bot): I'd like to reschedule my current appointment to Monday, please.
+AGENT (clinic): I can help with that.
+AGENT (clinic): One moment while I check for available times on Monday for your office visit.

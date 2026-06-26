@@ -50,7 +50,8 @@ never auto-joins a room). Placing one call is two steps:
 
 ```bash
 # 1. Start the worker (leave running). dev mode uses your LiveKit Cloud creds.
-python -m caller.agent dev
+#    Pick the patient scenario with SCENARIO_ID (defaults to "scheduling").
+SCENARIO_ID=refill python -m caller.agent dev
 
 # 2. In another terminal, trigger ONE outbound call.
 lk dispatch create --new-room --agent-name outbound-caller
@@ -59,6 +60,24 @@ lk dispatch create --new-room --agent-name outbound-caller
 This dials the single hardcoded clinic test line (`+18054398008`) over the
 outbound SIP trunk; caller ID is the trunk's number (`+15202143958`). The bot
 listens first and only responds once the clinic agent speaks.
+
+### Patient scenarios
+
+The patient persona is loaded from a typed library in
+[scenarios/scenarios.py](scenarios/scenarios.py). Select one with `SCENARIO_ID`;
+its `id` becomes the transcript suffix (e.g. `call-03-refill.txt`). Available:
+
+| `SCENARIO_ID` | What the patient does |
+| --- | --- |
+| `scheduling` (default) | Books a routine check-up for next week. |
+| `reschedule` | Moves or cancels an existing appointment. |
+| `refill` | Requests a refill of a named prescription. |
+| `info` | Asks informational questions (hours / insurance / parking). |
+| `existing_patient_persistent` | Insists they're an existing patient; pushes back on new-profile prompts. |
+| `out_of_scope` | Makes an impossible/out-of-scope request to probe boundaries. |
+
+Each scenario layers its persona/goal/facts/behavior on top of the invariant
+role rules (the bot is always the *caller*, never the clinic receptionist).
 
 ### Recordings
 
