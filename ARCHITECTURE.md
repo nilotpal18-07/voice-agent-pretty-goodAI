@@ -7,7 +7,8 @@
 
 The system places **outbound** phone calls and runs a real-time voice agent on
 each call. It is built on the LiveKit Agents framework, with telephony provided
-by a Telnyx-backed SIP trunk and the conversational stack provided by OpenAI.
+by a Telnyx-backed SIP trunk and the conversational stack provided by Deepgram
+(STT), Google Gemini (LLM), and Cartesia (TTS).
 
 ## Components
 
@@ -15,8 +16,8 @@ by a Telnyx-backed SIP trunk and the conversational stack provided by OpenAI.
 | ---------------- | ----------------------------------------------------------- |
 | `caller/agent.py`| LiveKit worker: dials out, hosts the agent session.         |
 | SIP trunk        | LiveKit outbound trunk → Telnyx → PSTN. (`SIP_OUTBOUND_TRUNK_ID`) |
-| STT / LLM / TTS  | OpenAI — speech-to-text, reasoning, text-to-speech.         |
-| VAD              | Silero voice-activity detection for turn-taking.            |
+| STT / LLM / TTS  | Deepgram (STT) · Google Gemini (LLM) · Cartesia (TTS).      |
+| VAD / turn-taking| Silero VAD + LiveKit audio turn detector (`inference`).     |
 | `scenarios/`     | Inputs: who to call and the goal/script for each call.      |
 | `recordings/`    | Outputs: captured call audio.                               |
 | `analysis/`      | Outputs: transcripts, metrics, and evaluation.              |
@@ -34,7 +35,8 @@ scenario ──> caller worker ──> LiveKit ──> SIP outbound trunk ──
 1. A job is dispatched to the worker with dial info (number + scenario).
 2. The worker creates a SIP participant via the outbound trunk to ring the callee.
 3. On answer, an `AgentSession` runs the STT → LLM → TTS loop in real time.
-4. Audio is optionally recorded; transcripts/metrics are written for analysis.
+4. The call is recorded by LiveKit Cloud (`session.start(record=True)`); a local
+   transcript of both sides is written to `recordings/`.
 
 ## Data flow
 
@@ -44,5 +46,7 @@ scenario ──> caller worker ──> LiveKit ──> SIP outbound trunk ──
 ## Open questions / TODO
 
 - Scenario file format (JSON/YAML?).
-- Recording strategy (LiveKit Egress vs. local capture).
+- ~~Recording strategy~~ — resolved: LiveKit Cloud recording (`record=True`),
+  audio downloaded from Agent insights; transcript written locally. Egress →
+  object storage remains an option if recordings must be auto-saved locally.
 - Analysis metrics and evaluation method.

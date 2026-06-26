@@ -1,0 +1,4 @@
+# Test-only dependencies (LiveKit Agents test harness runs on pytest).
+-r requirements.txt
+pytest~=8.3
+pytest-asyncio~=0.24

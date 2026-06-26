@@ -1,11 +1,12 @@
 # Outbound Voice Bot
 
 An outbound voice agent built on [LiveKit Agents](https://docs.livekit.io/agents/),
-placing calls over a Telnyx-backed SIP trunk and using OpenAI for the
-LLM / STT / TTS stack. Take-home project.
+placing calls over a Telnyx-backed SIP trunk and using Deepgram (STT),
+Google Gemini (LLM), and Cartesia (TTS) for the voice stack. Take-home project.
 
-> **Status:** scaffold only. Module bodies are stubbed (`TODO`); no call logic
-> is implemented yet.
+> **Status:** step 1 implemented — one outbound call with a single hardcoded
+> patient scenario. A scenario library, batch runner, and analysis layer are
+> future steps.
 
 ## Project structure
 
@@ -35,7 +36,7 @@ pip install -r requirements.txt
 
 # 3. Configure credentials
 cp .env.example .env
-# ...then fill in LiveKit, Telnyx SIP, and OpenAI values in .env
+# ...then fill in LiveKit, Telnyx SIP, Deepgram, Google, and Cartesia values in .env
 ```
 
 You will also need to provision a LiveKit **outbound SIP trunk** backed by a
@@ -44,11 +45,38 @@ Telnyx number and set `SIP_OUTBOUND_TRUNK_ID` in `.env`. See
 
 ## Usage
 
-> Not yet implemented. Once `caller/agent.py` is filled in, the worker will run
-> via the LiveKit Agents CLI, e.g.:
+The worker uses **explicit dispatch** (it registers as `outbound-caller` and
+never auto-joins a room). Placing one call is two steps:
 
 ```bash
-python -m caller.agent dev      # run the worker in dev mode
+# 1. Start the worker (leave running). dev mode uses your LiveKit Cloud creds.
+python -m caller.agent dev
+
+# 2. In another terminal, trigger ONE outbound call.
+lk dispatch create --new-room --agent-name outbound-caller
+```
+
+This dials the single hardcoded clinic test line (`+18054398008`) over the
+outbound SIP trunk; caller ID is the trunk's number (`+15202143958`). The bot
+listens first and only responds once the clinic agent speaks.
+
+### Recordings
+
+- **Transcript** (automatic, local): written to
+  `recordings/call-01-scheduling.txt` when the call ends.
+- **Audio** (LiveKit Cloud): the session runs with `record=True`, so LiveKit
+  records the mixed call audio + transcript + traces. Play back or download the
+  audio from **Sessions → Agent insights** in the LiveKit Cloud dashboard
+  (30-day retention). Enable **Agent observability** under the project's
+  *Data and privacy* settings for this to be captured.
+
+## Tests
+
+Behavioral tests run on LiveKit's text test harness (no telephony; uses Gemini):
+
+```bash
+pip install -r requirements-dev.txt
+python -m pytest -q
 ```
 
 ## Documentation

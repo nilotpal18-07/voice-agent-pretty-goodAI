@@ -3,12 +3,16 @@
 Inverts the LiveKit `outbound-caller-python` example: instead of being the
 clinic's assistant, this bot is a *patient* that calls a healthcare voice agent
 at a test line, lets that agent speak first, then plays a patient trying to book
-a routine appointment. The call audio is recorded via egress and a transcript of
-both sides is written to ``recordings/``.
+a routine appointment.
 
 Pipeline (text-LLM, NOT speech-to-speech):
     Deepgram STT -> google.LLM(gemini-2.5-flash) -> Cartesia TTS
-    Silero VAD + LiveKit semantic turn detection.
+    Silero VAD + LiveKit audio turn detector (inference.TurnDetector).
+
+Recording: the mixed call audio + transcript are recorded by LiveKit Cloud via
+``session.start(record=True)`` and are available to play back / download from the
+Cloud "Agent insights" dashboard. We *also* write a plain-text transcript of both
+sides locally to ``recordings/call-01-scheduling.txt`` from conversation events.
 """
 
 from __future__ import annotations
@@ -20,26 +24,26 @@ from pathlib import Path
 
 from dotenv import load_dotenv
 
-from livekit import rtc, api
+from livekit import api
 from livekit.agents import (
-    AgentSession,
     Agent,
+    AgentSession,
     JobContext,
-    function_tool,
-    RunContext,
-    get_job_context,
-    cli,
-    WorkerOptions,
     RoomInputOptions,
+    RunContext,
+    TurnHandlingOptions,
+    WorkerOptions,
+    cli,
+    function_tool,
+    get_job_context,
+    inference,
 )
 from livekit.plugins import (
+    cartesia,
     deepgram,
     google,
-    cartesia,
-    silero,
     noise_cancellation,
 )
-from livekit.plugins.turn_detector.english import EnglishModel
 
 # Read credentials from .env (LiveKit, Deepgram, Google, Cartesia, SIP trunk).
 load_dotenv()
@@ -51,14 +55,15 @@ logger.setLevel(logging.INFO)
 # The ONE and ONLY number this bot may ever dial (clinic test line). Hardcoded
 # on purpose so no other destination can be reached.
 AGENT_PHONE_NUMBER = "+18054398008"
-# Identity we assign to the dialed SIP participant (the clinic's agent).
+# Identity assigned to the dialed SIP participant (the clinic's agent).
 SIP_PARTICIPANT_IDENTITY = "clinic-agent"
-# Label used for the recording + transcript filenames.
+# Label used for the local transcript filename.
 CALL_LABEL = "call-01-scheduling"
 RECORDINGS_DIR = Path(__file__).resolve().parent.parent / "recordings"
 
 # Outbound SIP trunk (LiveKit, backed by Telnyx). Read from env, never hardcoded.
-outbound_trunk_id = os.getenv("SIP_OUTBOUND_TRUNK_ID")
+# Caller ID (+15202143958) comes from this trunk's configured `numbers`.
+SIP_OUTBOUND_TRUNK_ID = os.getenv("SIP_OUTBOUND_TRUNK_ID")
 
 
 # One fixed patient scenario for this step. The bot steers toward booking a
@@ -95,88 +100,55 @@ class PatientCaller(Agent):
 
     def __init__(self) -> None:
         super().__init__(instructions=PATIENT_INSTRUCTIONS)
-        # keep a reference to the dialed participant (the clinic agent)
-        self.participant: rtc.RemoteParticipant | None = None
-
-    def set_participant(self, participant: rtc.RemoteParticipant) -> None:
-        self.participant = participant
 
     async def hangup(self) -> None:
-        """Hang up by deleting the room."""
-        job_ctx = get_job_context()
+        """Hang up by deleting the room. No-ops outside a running job (e.g. tests)."""
+        try:
+            job_ctx = get_job_context()
+        except RuntimeError:
+            return
         await job_ctx.api.room.delete_room(
             api.DeleteRoomRequest(room=job_ctx.room.name)
         )
 
     @function_tool()
-    async def end_call(self, ctx: RunContext):
+    async def end_call(self, ctx: RunContext) -> None:
         """End the call once the appointment is booked or the conversation is over."""
         logger.info("patient ending the call")
-        # let any in-flight speech finish first
-        current_speech = ctx.session.current_speech
-        if current_speech:
-            await current_speech.wait_for_playout()
+        # Let any in-flight speech finish playing before hanging up.
+        await ctx.wait_for_playout()
         await self.hangup()
 
     @function_tool()
-    async def detected_answering_machine(self, ctx: RunContext):
+    async def detected_answering_machine(self, ctx: RunContext) -> None:
         """Call this if you reach a voicemail / answering machine instead of a person."""
         logger.info("answering machine detected, hanging up")
         await self.hangup()
-
-
-async def _start_recording(ctx: JobContext) -> None:
-    """Best-effort call recording via LiveKit egress (audio only).
-
-    On LiveKit Cloud, file output lands in your configured cloud storage; with a
-    self-hosted egress service it writes the filepath locally. Failures here are
-    logged but never abort the call.
-    """
-    try:
-        res = await ctx.api.egress.start_room_composite_egress(
-            api.RoomCompositeEgressRequest(
-                room_name=ctx.room.name,
-                audio_only=True,
-                file_outputs=[
-                    api.EncodedFileOutput(
-                        file_type=api.EncodedFileType.OGG,
-                        filepath=f"recordings/{CALL_LABEL}.ogg",
-                    )
-                ],
-            )
-        )
-        logger.info(
-            f"started egress {res.egress_id} -> recordings/{CALL_LABEL}.ogg"
-        )
-    except Exception as e:  # noqa: BLE001 - recording is best-effort
-        logger.warning(f"could not start egress recording (call continues): {e}")
 
 
 async def entrypoint(ctx: JobContext) -> None:
     logger.info(f"connecting to room {ctx.room.name}")
     await ctx.connect()
 
-    agent = PatientCaller()
-
-    # Text-LLM pipeline (not a realtime/speech-to-speech model). EnglishModel is
-    # LiveKit's semantic turn detector, so the patient waits until the clinic
-    # agent has actually finished its turn before replying.
+    # Text-LLM pipeline (not a realtime/speech-to-speech model). The LiveKit
+    # audio turn detector (inference.TurnDetector) + Silero VAD make the patient
+    # wait until the clinic agent has actually finished its turn before replying.
     session = AgentSession(
-        turn_detection=EnglishModel(),
-        vad=silero.VAD.load(),
+        vad=inference.VAD(model="silero"),
         stt=deepgram.STT(),
         llm=google.LLM(model="gemini-2.5-flash"),
         tts=cartesia.TTS(),
+        turn_handling=TurnHandlingOptions(turn_detection=inference.TurnDetector()),
     )
 
-    # Capture both sides for the transcript. "assistant" = our patient bot,
+    # Capture both sides for the local transcript. "assistant" = our patient bot,
     # "user" = transcribed speech from the clinic agent.
     transcript: list[tuple[str, str]] = []
 
     @session.on("conversation_item_added")
     def _on_conversation_item(ev) -> None:
         text = getattr(ev.item, "text_content", None)
-        if ev.item.role in ("user", "assistant") and text:
+        if getattr(ev.item, "role", None) in ("user", "assistant") and text:
             transcript.append((ev.item.role, text))
 
     async def write_transcript() -> None:
@@ -191,16 +163,21 @@ async def entrypoint(ctx: JobContext) -> None:
 
     ctx.add_shutdown_callback(write_transcript)
 
-    # record the call audio (best-effort)
-    await _start_recording(ctx)
+    if not SIP_OUTBOUND_TRUNK_ID:
+        logger.error("SIP_OUTBOUND_TRUNK_ID is not set in .env; cannot place the call")
+        ctx.shutdown()
+        return
 
-    # Start the session BEFORE dialing so we don't miss the agent's opening.
-    # We deliberately do NOT call session.generate_reply() here: the far end
+    # Start the session BEFORE dialing so we don't miss the clinic agent's
+    # opening line. record=True -> LiveKit Cloud records the mixed call audio +
+    # transcript + traces (play back / download from the Agent insights tab).
+    # We deliberately do NOT call session.generate_reply(): the far end (clinic)
     # speaks first, and the patient only responds.
     session_started = asyncio.create_task(
         session.start(
-            agent=agent,
+            agent=PatientCaller(),
             room=ctx.room,
+            record=True,
             room_input_options=RoomInputOptions(
                 # telephony noise cancellation, since this is a phone call
                 noise_cancellation=noise_cancellation.BVCTelephony(),
@@ -208,26 +185,18 @@ async def entrypoint(ctx: JobContext) -> None:
         )
     )
 
-    # `create_sip_participant` dials the ONE allowed destination and blocks
-    # until answered (or the call fails).
+    # `create_sip_participant` dials the ONE allowed destination through the
+    # outbound trunk and blocks until answered (or the call fails).
     try:
         await ctx.api.sip.create_sip_participant(
             api.CreateSIPParticipantRequest(
                 room_name=ctx.room.name,
-                sip_trunk_id=outbound_trunk_id,
+                sip_trunk_id=SIP_OUTBOUND_TRUNK_ID,
                 sip_call_to=AGENT_PHONE_NUMBER,
                 participant_identity=SIP_PARTICIPANT_IDENTITY,
                 wait_until_answered=True,
             )
         )
-
-        await session_started
-        participant = await ctx.wait_for_participant(
-            identity=SIP_PARTICIPANT_IDENTITY
-        )
-        logger.info(f"clinic agent joined: {participant.identity}")
-        agent.set_participant(participant)
-
     except api.TwirpError as e:
         logger.error(
             f"error creating SIP participant: {e.message}, "
@@ -235,6 +204,11 @@ async def entrypoint(ctx: JobContext) -> None:
             f"{e.metadata.get('sip_status')}"
         )
         ctx.shutdown()
+        return
+
+    await session_started
+    participant = await ctx.wait_for_participant(identity=SIP_PARTICIPANT_IDENTITY)
+    logger.info(f"clinic agent joined: {participant.identity}")
 
 
 if __name__ == "__main__":

@@ -1,0 +1,23 @@
+# Transcript - call-01-scheduling
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hello, thanks for calling Main Street Clinic. My name is Sarah, how can I help you today?
+AGENT (clinic): Hi, Sarah. How can I assist you today?
+PATIENT (bot): Hi Sarah, I'd like to book a routine check-up, please.
+AGENT (clinic): I can help with that. We get started, would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): No, I'm an existing patient. My name is Alex Carter.
+AGENT (clinic): Thanks.
+AGENT (clinic): Alex. Since I don't have a patient profile for you yet,
+AGENT (clinic): would you like to create a demo patient profile now?
+AGENT (clinic): I just need your first and last name to get started.
+AGENT (clinic): Thanks, Alex.
+AGENT (clinic): I hope to see a patient profile for you. Yeah.
+AGENT (clinic): Would you like to create a demo patient profile now? I just need your first and last name.
+PATIENT (bot): I'm an existing patient, Alex Carter. I'm just trying to book a check-up.
+AGENT (clinic): To book your checkup, I'll need to create a demo patient profile for you first.
+AGENT (clinic): Can I go ahead and set that up using the name Alex Carter?
+AGENT (clinic): Your patient profile has been created successfully. And your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+AGENT (clinic): Are you still there?
+AGENT (clinic): I'm going to end the call now.
