@@ -6,6 +6,7 @@ All deterministic — no LLM calls, so these are fast and quota-free.
 from __future__ import annotations
 
 import importlib
+import json
 from pathlib import Path
 
 import pytest
@@ -127,6 +128,24 @@ def test_invariant_role_rules_survive_for_every_scenario(sid: str) -> None:
         assert phrase in normalized, f"{sid} instructions dropped invariant: {phrase!r}"
 
 
+def test_out_of_scope_patient_asks_about_sunday_not_announces_closure() -> None:
+    """Regression: the out_of_scope patient must ASK about Sunday as a caller and never
+    announce the clinic's hours/closures. A prior run had the bot say
+    'I'm sorry, we're closed on Sundays' — inverting into the clinic's role."""
+    low = " ".join(build_instructions(get_scenario("out_of_scope")).split()).lower()
+
+    # Asks about Sunday as a request, and reacts as a caller if told it's closed.
+    assert "can i come in this sunday" in low
+    assert "what about monday then" in low
+
+    # Explicitly forbidden from announcing the clinic's hours/closures.
+    assert "never announce" in low
+    assert "you are the caller, not the clinic" in low
+
+    # The old, leak-prone goal framing ("a day the clinic is closed") is gone.
+    assert "a day the clinic is closed" not in low
+
+
 # --- Wiring into the agent (scenario id -> transcript filename) -------------
 
 def test_default_scenario_id_is_scheduling(monkeypatch) -> None:
@@ -155,3 +174,31 @@ def test_scenario_id_env_flows_to_transcript_filename(monkeypatch, tmp_path: Pat
     finally:
         monkeypatch.delenv("SCENARIO_ID", raising=False)
         importlib.reload(agent_mod)  # restore default for other tests
+
+
+# --- Scenario selection precedence (dispatch metadata > env > default) -------
+
+def test_resolve_scenario_id_prefers_metadata() -> None:
+    metadata = json.dumps({"scenario_id": "refill"})
+    assert agent_mod.resolve_scenario_id(metadata, "scheduling") == "refill"
+
+
+def test_resolve_scenario_id_falls_back_to_env_without_metadata() -> None:
+    assert agent_mod.resolve_scenario_id(None, "reschedule") == "reschedule"
+    assert agent_mod.resolve_scenario_id("", "reschedule") == "reschedule"
+
+
+def test_resolve_scenario_id_falls_back_to_default() -> None:
+    assert agent_mod.resolve_scenario_id(None, None) == agent_mod.DEFAULT_SCENARIO_ID
+
+
+def test_resolve_scenario_id_ignores_bad_or_incomplete_metadata() -> None:
+    # Unparseable JSON -> env, then default.
+    assert agent_mod.resolve_scenario_id("not json", "info") == "info"
+    # Valid JSON but no scenario_id key -> env.
+    assert agent_mod.resolve_scenario_id(json.dumps({"foo": "bar"}), "info") == "info"
+    # Valid JSON, no scenario_id, no env -> default.
+    assert (
+        agent_mod.resolve_scenario_id(json.dumps({"foo": "bar"}), None)
+        == agent_mod.DEFAULT_SCENARIO_ID
+    )

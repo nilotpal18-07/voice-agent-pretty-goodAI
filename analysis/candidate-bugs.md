@@ -35,15 +35,18 @@ Calls are referenced by their full transcript filename (without `.txt`).
 | ID | Title | Severity | Status | Source(s) |
 | --- | --- | --- | --- | --- |
 | BUG-01 | Existing-patient profile loop | Major | Reproducible (4 calls) | call-01-scheduling, call-02-scheduling, call-01-existing_patient_persistent, call-01-reschedule |
-| BUG-02 | Date-of-birth hallucination | Major | Reproducible (4 calls) | call-01-scheduling, call-02-scheduling, call-01-existing_patient_persistent, call-01-reschedule |
+| BUG-02 | Date-of-birth hallucination (hardcoded default) | Major | Reproducible (6 calls / 5 scenarios) | call-01-scheduling, call-02-scheduling, call-01-existing_patient_persistent, call-01-reschedule, call-01-out_of_scope, call-01-refill |
 | BUG-03 | Acknowledged DOB correction not persisted (re-asked) | Major | Candidate (single) | call-02-scheduling |
 | BUG-04 | Provider name instability | Major | Reproducible | call-02-scheduling, call-01-reschedule |
 | BUG-05 | Clinic/specialty mismatch (ortho for routine physical) | Minor | Candidate (single) | call-02-scheduling |
 | BUG-06 | Ignores stated morning preference | Major | Candidate (single) | call-02-scheduling |
-| BUG-07 | Phantom existing appointment (hallucinated state) | Major | Candidate (single) | call-01-existing_patient_persistent |
+| BUG-07 | Phantom existing appointment (now blocks booking) | Critical | Reproducible | call-01-existing_patient_persistent, call-01-out_of_scope |
 | BUG-08 | Ignored/overridden confirmed transfer request | Critical | Candidate (single) | call-01-existing_patient_persistent |
 | BUG-09 | Goal failure: scenario task left unresolved | Major (outcome) | Reproducible | call-01-existing_patient_persistent, call-01-reschedule |
 | BUG-10 | Cross-call appointment state leakage | Critical | Candidate (single) | call-01-reschedule (cross-ref call-02-scheduling) |
+| BUG-11 | Basic info gated behind profile creation | Major | Candidate (single) | call-01-info |
+| BUG-12 | Cannot provide basic clinic info | Major | Candidate (single) | call-01-info |
+| BUG-13 | Broken / dead-end transfer | Critical | Candidate (single) | call-01-info (cross-ref call-01-existing_patient_persistent) |
 
 ---
 
@@ -92,26 +95,28 @@ Calls are referenced by their full transcript filename (without `.txt`).
 
 ---
 
-## BUG-02 — Date-of-birth hallucination (fabricates a DOB never provided)
+## BUG-02 — Date-of-birth hallucination (hardcoded demo default)
 
 - **Severity:** Major — fabricates PII (a date of birth) the patient never gave and
   attaches it to the record. Data-integrity defect.
-- **Status:** Reproducible — seen in 4 calls (call-01-scheduling, call-02-scheduling, call-01-existing_patient_persistent, call-01-reschedule).
-- **Source call(s):** `recordings/call-01-scheduling.txt`, `recordings/call-02-scheduling.txt`, `recordings/call-01-existing_patient_persistent.txt`, `recordings/call-01-reschedule.txt`
-- **What happened:** On creating the profile, the agent announces a date of birth of
-  "July fourth, two thousand" that the patient never provided. In call-02-scheduling the
-  patient had stated March 14, 1990 moments earlier (L10), and in
-  call-01-existing_patient_persistent the patient stated the same DOB before the profile
-  was created (L12) — both ignored in favor of the invented date. In call-01-reschedule a
-  **different** patient (Jordan Blake), who had given no DOB at all, is assigned the
-  **identical** value (L17). Because the same string ("July fourth two thousand") recurs
-  verbatim across all four calls and two different patients, this looks like a **hardcoded
-  demo default**, not a random hallucination.
+- **Status:** Reproducible — seen in **6 calls across all 5 profile-creating scenarios**
+  (call-01-scheduling, call-02-scheduling, call-01-existing_patient_persistent,
+  call-01-reschedule, call-01-out_of_scope, call-01-refill). The single most-reproduced
+  bug in this log. (The `info` scenario never reached profile creation, so it's the only
+  scenario without it.)
+- **Source call(s):** `recordings/call-01-scheduling.txt`, `recordings/call-02-scheduling.txt`, `recordings/call-01-existing_patient_persistent.txt`, `recordings/call-01-reschedule.txt`, `recordings/call-01-out_of_scope.txt`, `recordings/call-01-refill.txt`
+- **What happened:** Every time the agent creates a profile, it assigns the date of birth
+  "July fourth two thousand" — which the patient never provided. The identical value recurs
+  verbatim across 6 calls and 4 different patients (Alex Carter, Jordan Blake, Riley Morgan,
+  Sam Rivera), several of whom gave a different real DOB just before or right after. This is
+  conclusively a **hardcoded demo default**, not a random hallucination.
 - **Evidence:**
-  > AGENT (clinic): Your patient profile has been created successfully. And your date of birth is July fourth two thousand for demo purposes. *(call-01-scheduling L20)*
-  > AGENT (clinic): Your patient profile has been created and your date of birth is set as July fourth. Two thousand for demo purposes. *(call-02-scheduling L13)*
-  > AGENT (clinic): Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes. *(call-01-existing_patient_persistent L16 — patient Alex Carter)*
-  > AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes. *(call-01-reschedule L17 — patient Jordan Blake, who never gave a DOB)*
+  > AGENT (clinic): Your patient profile has been created successfully. And your date of birth is July fourth two thousand for demo purposes. *(call-01-scheduling L20 — Alex Carter)*
+  > AGENT (clinic): Your patient profile has been created and your date of birth is set as July fourth. Two thousand for demo purposes. *(call-02-scheduling L13 — Alex Carter)*
+  > AGENT (clinic): Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes. *(call-01-existing_patient_persistent L16 — Alex Carter)*
+  > AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes. *(call-01-reschedule L17 — Jordan Blake, who never gave a DOB)*
+  > AGENT (clinic): And your date of birth is July fourth two thousand. *(call-01-out_of_scope L12 — Riley Morgan, who never gave a DOB)*
+  > AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand. ... *(call-01-refill L12 — Sam Rivera, who then corrected it to Nov 9, 1978)*
 
 ---
 
@@ -199,22 +204,32 @@ Calls are referenced by their full transcript filename (without `.txt`).
 
 ---
 
-## BUG-07 — Phantom existing appointment (hallucinated state)
+## BUG-07 — Phantom existing appointment (hallucinated state, now blocks booking)
 
-- **Severity:** Major — fabricates appointment state on a profile created seconds
-  earlier, then offers to reschedule/cancel an appointment that cannot exist. A
-  data-integrity / hallucination defect that derailed the booking.
-- **Status:** Candidate (single observation).
-- **Source call:** `recordings/call-01-existing_patient_persistent.txt`
-- **What happened:** Immediately after the agent created a brand-new demo profile, the
-  patient tried to book. The agent claimed they "already have a routine checkup
-  appointment booked" — impossible for a just-created profile — and offered to
-  reschedule or cancel it, then admitted it had no access to the appointment's date.
+- **Severity:** Critical — fabricates an existing appointment on a profile created seconds
+  earlier and, in call-01-out_of_scope, **refuses to book the requested appointment because
+  of it** ("I'm unable to schedule another one"), blocking the core task. (It was Major when
+  it only caused confusion in call-01-existing_patient_persistent; the out_of_scope call
+  escalates it to blocking the goal.)
+- **Status:** Reproducible (seen in call-01-existing_patient_persistent and call-01-out_of_scope).
+- **Source call(s):** `recordings/call-01-existing_patient_persistent.txt`, `recordings/call-01-out_of_scope.txt`
+- **What happened:** Immediately after creating a brand-new demo profile, the agent claims
+  the patient already has an appointment booked — impossible for a just-created profile. In
+  call-01-existing_patient_persistent it offered to reschedule/cancel the nonexistent
+  appointment and couldn't give its date. In call-01-out_of_scope it goes further: when the
+  patient asks to book the office visit the agent itself just recommended, the agent refuses
+  because of the phantom appointment and will only reschedule it.
 - **Evidence:**
+
+  call-01-existing_patient_persistent:
   > AGENT (clinic): Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes. *(L16)*
   > AGENT (clinic): Let me check the first available time for a routine checkup. One moment. It looks like you already have a routine checkup appointment booked. If you'd like, I can help you reschedule or cancel it. Would you like to make a change to your existing appointment? *(L25)*
-  > AGENT (clinic): Yes. You already have a routine checkup appointment on file. Would you like to reschedule or cancel it? Or do you want to keep your current appointment? *(L27)*
   > AGENT (clinic): I don't have access to the exact date of your existing appointment. ... *(L29)*
+
+  call-01-out_of_scope (the phantom appointment now blocks the booking):
+  > AGENT (clinic): Your patient profile is set up. *(L10)*
+  > AGENT (clinic): It looks like you already have an office visit appointment booked. If you want, I can help you reschedule or cancel your current appointment or connect you with live support for more help. *(L27)*
+  > AGENT (clinic): Since you already have an office visit booked, I'm unable to schedule another one for you. Would you like to reschedule your current appointment to Monday? *(L35)*
 
 ---
 
@@ -286,6 +301,86 @@ Calls are referenced by their full transcript filename (without `.txt`).
   call-02-scheduling (Alex Carter — the original booking of that same slot):
   > PATIENT (bot): Okay, 9:30 AM on Monday, July 6th sounds good. *(L28)*
   > AGENT (clinic): Your routine checkup is booked for Monday, July sixth at nine thirty AM with doctor Zigniew Likoski at Pivot Point Orthopedics ... *(L29)*
+
+---
+
+## BUG-11 — Basic info gated behind profile creation
+
+- **Severity:** Major — the agent tries to make the caller create a demo patient profile
+  just to answer a simple "what are your weekend hours" question. Basic, non-account info
+  should not require profile creation.
+- **Status:** Candidate (single observation).
+- **Source call:** `recordings/call-01-info.txt`
+- **What happened:** The caller asks for weekend hours. Instead of answering or routing the
+  question, the agent pivots to offering a demo patient profile.
+- **Evidence:**
+  > PATIENT (bot): Hi, I'm calling to ask a few quick questions. Could you tell me what your weekend hours are? *(L6)*
+  > AGENT (clinic): I don't have the clinic's weekend hours available right now. Would you like to create a demo patient profile? That way I can help you with more details and services. *(L7)*
+
+---
+
+## BUG-12 — Cannot provide basic clinic info
+
+- **Severity:** Major — the agent cannot answer a basic clinic-hours question, a core
+  capability for a clinic phone line.
+- **Status:** Candidate (single observation).
+- **Source call:** `recordings/call-01-info.txt`
+- **What happened:** Asked for weekend hours, the agent states it doesn't have them
+  available, with no path to provide basic, non-account-specific clinic information.
+- **Evidence:**
+  > PATIENT (bot): ... Could you tell me what your weekend hours are? *(L6)*
+  > AGENT (clinic): I don't have the clinic's weekend hours available right now. ... *(L7)*
+
+---
+
+## BUG-13 — Broken / dead-end transfer
+
+- **Severity:** Critical — the agent announces a transfer to clinic support, then the call
+  dead-ends instead of reaching a human. Together with BUG-08 (a confirmed transfer the
+  agent silently dropped), this indicates the agent offers transfers it cannot complete.
+- **Status:** Candidate (single observation; related to BUG-08 in call-01-existing_patient_persistent).
+- **Source call:** `recordings/call-01-info.txt` (cross-referenced against `recordings/call-01-existing_patient_persistent.txt`)
+- **What happened:** Unable to answer the hours question, the agent offers to transfer the
+  caller to clinic support and says it is connecting them — but the call then ends.
+  *Framing caveat:* the final line ("You've reached the Pretty Good AI test line. Goodbye.")
+  may be the test harness's outer wrapper terminating the call rather than the clinic
+  agent's own output, so this is logged as a transfer that **dead-ends**, not a proven
+  mis-route. Either way, no working transfer occurred. Compare BUG-08, where a confirmed
+  transfer request was dropped in favor of booking.
+- **Evidence:**
+  > AGENT (clinic): I can connect you to our clinic support team for more information about weekend hours, Please stay on the line while I transfer your call. *(L10)*
+  > AGENT (clinic): Connecting you to a representative. *(L12)*
+  > AGENT (clinic): Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye. *(L13)*
+
+---
+
+## Handled correctly (positive observations)
+
+For report balance — things the agent did well, grounded in transcripts. Numbered
+separately (OK-NN) from the bugs.
+
+### OK-01 — Out-of-scope MRI correctly required a provider order
+
+- **Source call:** `recordings/call-01-out_of_scope.txt`
+- **What happened:** Asked for a full-body MRI, the agent appropriately checked whether the
+  caller had an order, explained one is needed first, and offered a general office visit to
+  obtain it — a reasonable, safe handling of an out-of-scope request.
+- **Evidence:**
+  > AGENT (clinic): Just to clarify, are you looking to discuss the MRI with a provider first, or do you already have an order and just need to schedule the procedure? *(L22)*
+  > AGENT (clinic): Since you don't have an order yet, you'll need to see a provider first. Would you like to book a general office visit to discuss the MRI and get an order if appropriate? *(L25)*
+
+### OK-02 — Refill flow captured and confirmed details cleanly
+
+- **Source call:** `recordings/call-01-refill.txt`
+- **What happened:** The refill flow worked well: the agent confirmed the medication and
+  dose, gracefully re-asked the days-supply question and accepted an estimate, and confirmed
+  the callback number and pharmacy. No phantom appointment or broken transfer appeared in
+  this call.
+- **Evidence:**
+  > AGENT (clinic): For this refill, can you confirm that you need lisinopril ten milligrams? *(L14)*
+  > AGENT (clinic): Just to clarify, how many days of medication do you have left before you run out? ... An estimate is fine, *(L19, L21)*
+  > AGENT (clinic): ... Can you confirm the best phone number for a callback? I have your number as five two zero two one four three nine five eight. Is that correct? *(L24)*
+  > AGENT (clinic): Could you please provide the name of the pharmacy you want to use for your medication? *(L26)*
 
 ---
 

@@ -1,0 +1,30 @@
+# Transcript - call-05-refill
+# Room: batch-refill-06-a10e17
+# Recorded: 2026-06-26T15:30:01
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+AGENT (clinic): Thank you for calling Pivot Point Orthopaedics.
+AGENT (clinic): Would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Sam Rivera. I'm actually an existing patient. I'm calling to get a refill on my lisinopril.
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Oh, my date of birth is actually November 9, 1978. I'm calling to get a refill on my lisinopril, the 10 mg.
+AGENT (clinic): Thanks for letting me know.
+AGENT (clinic): To confirm, you need a refill on lisinopril ten milligrams.
+PATIENT (bot): Yes,
+AGENT (clinic): Is that correct?
+PATIENT (bot): That's correct. I've been on it for about two years now.
+AGENT (clinic): You need a refill on lisinopril
+AGENT (clinic): ten milligrams.
+AGENT (clinic): How many days of medication do you have left?
+PATIENT (bot): I'm running pretty low, I think I have about one refill left.
+AGENT (clinic): Just to clarify, how many days of medication do you have left before you run out?
+PATIENT (bot): Probably
+AGENT (clinic): You're not sure, a rough estimate is fine.
+PATIENT (bot): It's probably about ten days. I think I have about one refill left.
+AGENT (clinic): I have ten days left for your lisinopril refill.
+AGENT (clinic): Can I confirm your callback number as five two zero two one four three nine five eight?
+PATIENT (bot): Yes, that's correct. And could you send that refill to Walgreens on 5th Avenue?
+AGENT (clinic): Got it.
+AGENT (clinic): Is there anything else you'd like us to know about your refill request such as symptoms or urgency?

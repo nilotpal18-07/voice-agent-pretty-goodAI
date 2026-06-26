@@ -1,0 +1,21 @@
+# Transcript - call-03-existing_patient_persistent
+# Room: batch-existing_patient_persistent-10-117c18
+# Recorded: 2026-06-26T15:39:59
+
+AGENT (clinic): This call may be recorded for quality and training purposes. Thank you for calling Pivot Point Orthopaedics. Would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Alex Carter. I'm actually an existing patient, so I don't need a demo profile.
+AGENT (clinic): Thanks for letting me know. Alex.
+AGENT (clinic): Since I don't see your profile in the system, would you like to create a demo patient profile now?
+AGENT (clinic): This helps me assist you with your request today.
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): I've been coming here for years, so I should definitely be in the system. Could you please try looking me up by my name and date of birth instead of creating a new profile? It's March 14th, 1990.
+AGENT (clinic): I understand you've been a patient here for years.
+AGENT (clinic): Right now, I don't have access to your existing records, so I'm unable to look you up by name and date of birth.
+AGENT (clinic): Would you like to create a demo patient profile so I can help you today?
+AGENT (clinic): If not, you can scan the QR code at the booth to create a profile later.
+PATIENT (bot): This is a bit frustrating. I'm really sure I'm an existing patient. Is there someone else who can look up my records? I don't want to create a new profile.
+AGENT (clinic): I understand this is frustrating.
+AGENT (clinic): I'll connect you to our clinic support team so they can look up your records.
+AGENT (clinic): Please stay on the line while I transfer your call.
+AGENT (clinic): Connecting you to a representative.

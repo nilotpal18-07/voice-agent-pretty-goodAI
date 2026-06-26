@@ -1,0 +1,11 @@
+# Transcript - call-04-refill
+# Room: batch-refill-05-7843cc
+# Recorded: 2026-06-26T15:27:46
+
+AGENT (clinic): This call may be recorded for quality and training purposes. Thank you for calling Pivot
+PATIENT (bot): Hi, I'm Sam Rivera, and I'm calling to request a prescription refill.
+AGENT (clinic): Would you like to create a demo patient profile so I can help with your refill request?
+PATIENT (bot): No,
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Sam Rivera.
+AGENT (clinic): No problem. You can scan the QR code at the booth to create a profile later if you'd like. Have a great day.

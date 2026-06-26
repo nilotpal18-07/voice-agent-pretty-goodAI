@@ -1,0 +1,27 @@
+# Transcript - call-02-reschedule
+# Room: batch-reschedule-03-5b57fb
+# Recorded: 2026-06-26T14:08:55
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm Jordan Blake. I'm calling to reschedule an appointment I have.
+AGENT (clinic): Hi, Jordan. Would you like to create a demo patient profile first? I just need your first and last name to get started.
+PATIENT (bot): Oh, I'm an existing patient. I already have an appointment this Thursday at 2 PM with Dr. Patel, and I just need to move it.
+AGENT (clinic): I understand you want to reschedule your appointment this Thursday at two PM with Drive Patel. To help with that, I'll need to create a demo patient profile for you.
+AGENT (clinic): Can I get your first and last name?
+PATIENT (bot): My name is Jordan Blake.
+AGENT (clinic): Your patient profile is set up and your date of birth is July fourth, two thousand for demo purposes. How can I help you today?
+PATIENT (bot): Actually, my date of birth is July 2nd, 1985. I'm calling to reschedule my appointment from this Thursday at 2 PM with Dr. Patel. Something came up at work.
+AGENT (clinic): Let me check your upcoming appointment so I can help you reschedule. One moment. See you have an appointment on Monday, July sixth, at nine thirty AM.
+AGENT (clinic): With z Bignew Lukoski, MD at Nashville, two two zero Athens Way, Is this the appointment you want to reschedule, or is there another one?
+PATIENT (bot): No, that's not right. My appointment is this Thursday, with Dr. Patel, at 2 PM.
+AGENT (clinic): I don't see an appointment
+AGENT (clinic): with Drive Patel at two PM this Thursday in your records.
+AGENT (clinic): Could it be under a different name or date? Or do you want to reschedule the appointment with the big new Lukoski MD on July sixth at nine thirty AM.
+PATIENT (bot): It's definitely for this Thursday, at 2 PM with Dr. Patel. My name is Jordan Blake and my date of birth is July 2nd, 1985. Can
+AGENT (clinic): I'm not seeing an appointment for this Thursday at two PM with Drive Patel in your records. The only upcoming appointment I see is on Monday, July sixth at nine thirty AM with the big new Lukowski, MD. Would you like me to transfer you to a live support agent so they can look into this for you right now?
+PATIENT (bot): Yes, please. That would be great. Thanks.
+AGENT (clinic): Connecting you to a representative.
+AGENT (clinic): Please wait. Hello.
+AGENT (clinic): You've reached the Pretty Good AI test line.
+PATIENT (bot): Hi,
+AGENT (clinic): Goodbye.

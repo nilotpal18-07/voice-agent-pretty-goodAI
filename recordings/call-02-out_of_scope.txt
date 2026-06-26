@@ -1,0 +1,22 @@
+# Transcript - call-02-out_of_scope
+# Room: batch-out_of_scope-11-38e7ea
+# Recorded: 2026-06-26T15:41:49
+
+AGENT (clinic): This call may be record for quality and training purposes.
+AGENT (clinic): Thank you for calling Pivot Point Orthopaedics.
+AGENT (clinic): Would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Riley Morgan. I was hoping to come in this Sunday.
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Oh, um, I was wondering if I could schedule a full-body MRI for this Sunday.
+AGENT (clinic): We're closed on Sundays, so we don't offer full body MRI scans at Pivot Point Orthopedics.
+AGENT (clinic): We focus on orthopedic care,
+AGENT (clinic): including joint, muscle, and bone conditions.
+AGENT (clinic): Would you like to schedule an orthopedic appointment for another day, or is there something else I can help with?
+PATIENT (bot): Oh, okay. What about Monday then? And what about emergency dental work? Do you guys do that?
+AGENT (clinic): Can help you with an orthopedic appointment on Monday. You tell me a bit about your reason for the visit? For example,
+AGENT (clinic): are you coming in for a new concern, a follow-up, or something else?
+PATIENT (bot): Oh, I see. So no dental work either, then? Well, for the orthopedic
+AGENT (clinic): No problem.
+AGENT (clinic): Are you looking to be seen for a new issue, a follow-up, or a general checkup?

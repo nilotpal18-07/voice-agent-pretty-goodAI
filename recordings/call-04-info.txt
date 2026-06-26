@@ -1,0 +1,22 @@
+# Transcript - call-04-info
+# Room: batch-info-08-6c122f
+# Recorded: 2026-06-26T15:34:38
+
+AGENT (clinic): This call may be recorded for quality and training purposes. Thank you for calling Pivot Point Orthopedics.
+AGENT (clinic): Would you like to create a demo patient profile? I just need your first and last name,
+PATIENT (bot): Hi, I'm Casey Nguyen. I just have a quick question.
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Okay, great. I was just calling to find out your weekend hours.
+AGENT (clinic): Pivot Point Orthopedics is open Monday through Friday, We are closed on weekends. If you need to schedule an appointment or have questions, I can help with that now.
+PATIENT (bot): Okay, good to know. And do you accept Blue Cross Blue Shield PPO?
+AGENT (clinic): We accept most insurance plans, including many Blue Cross Blue Shield PPO plans. If you want to confirm your specific coverage or update your insurance on file,
+PATIENT (bot): Yes, that's
+AGENT (clinic): I can help with that. Would you like to check or update your
+PATIENT (bot): Okay, I just want to
+AGENT (clinic): There is no insurance currently on file for you.
+AGENT (clinic): Would you like to receive a text message at a number ending in three nine five eight to upload photos of your Blue Cross Blue Shield PPO card?
+PATIENT (bot): No, I just wanted to know if you accept it.
+AGENT (clinic): No problem. I can collect your Blue Cross Blue Shield PPO details now. What is the full name of your insurance company and plan as shown on your card?
+PATIENT (bot): Okay, I think that answers my question. I was also wondering about parking. Is there a parking lot, or is it street parking?
+AGENT (clinic): Free patient parking is available in the surface lot right in front of the building.

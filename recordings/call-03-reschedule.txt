@@ -1,0 +1,26 @@
+# Transcript - call-03-reschedule
+# Room: batch-reschedule-04-d6e180
+# Recorded: 2026-06-26T14:11:31
+
+AGENT (clinic): This call may be recorded for quality and training
+PATIENT (bot): Hi, I'm Jordan Blake. I'm calling to see if I can reschedule my appointment.
+AGENT (clinic): Would you like to create a demo patient profile so I can help with your appointment?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): I'm an existing patient, Jordan Blake. My appointment is this Thursday at 2 PM with Dr. Patel. I need to move it because something came up at work.
+AGENT (clinic): I can help with that. To access your appointment details, I'll need to create a demo patient profile for you. Can you please confirm your first and last name?
+PATIENT (bot): My name is Jordan Blake.
+AGENT (clinic): See you have an appointment scheduled for Monday, July sixth at nine thirty AM with doctor
+AGENT (clinic): Zebigniew Lukowski at Nashville two two zero Athens Way, Is this the appointment you want to reschedule, or do you have another one?
+PATIENT (bot): No, that's not right. My appointment is this Thursday, July 2nd, at 2 PM with Dr.
+AGENT (clinic): Thanks for letting me know. I don't see an appointment for this Thursday at two PM with Drive Patel in your record.
+PATIENT (bot): Hmm,
+AGENT (clinic): Is it possible the appointment is under a different name? Or could it be at a different location?
+PATIENT (bot): No, it should be under Jordan Blake. And it's for Dr. Patel. My
+AGENT (clinic): Would you like me to transfer you to a live support agent now so they can help find your appointment and assist with rescheduling?
+PATIENT (bot): Yes, please. That would be great.
+AGENT (clinic): I wasn't able to find your appointment in the system. I can connect you to our patient support team for more help.
+PATIENT (bot): Okay,
+AGENT (clinic): Would you like me to transfer you now?
+PATIENT (bot): Yes, please.
+AGENT (clinic): Connecting you to a representative. Please wait. Hello. You've reached the Pretty Good AI test line.
+AGENT (clinic): Goodbye.

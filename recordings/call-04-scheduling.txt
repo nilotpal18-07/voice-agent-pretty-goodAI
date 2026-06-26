@@ -1,0 +1,32 @@
+# Transcript - call-04-scheduling
+# Room: batch-scheduling-01-1c8a00
+# Recorded: 2026-06-26T13:43:56
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to schedule a routine annual check-up.
+AGENT (clinic): I can help with that. Would you like to create a demo patient profile first? I just need your first and last name to get started.
+PATIENT (bot): My name is Alex Carter. I'm already an existing patient.
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand.
+AGENT (clinic): How can I help you today?
+PATIENT (bot): Oh, my date of birth is actually March 14, 1990. I'm calling to book a routine annual check-up.
+AGENT (clinic): Thanks for clarifying, Alex.
+AGENT (clinic): You'd like to schedule a routine annual checkup
+PATIENT (bot): Yes,
+AGENT (clinic): Just to confirm, is this for a general office visit for routine care?
+PATIENT (bot): That's right, a general physical.
+AGENT (clinic): Have a specific provider you'd like to see, or are you open to the next available appointment?
+PATIENT (bot): I'm open to the next available. I was hoping for sometime next week, preferably in the morning.
+AGENT (clinic): Let me check for the next available appointments for a routine annual checkup.
+PATIENT (bot): Okay, thank you.
+AGENT (clinic): If you need to reschedule or cancel your current annual checkup,
+PATIENT (bot): I
+AGENT (clinic): I can help with that.
+AGENT (clinic): Would you like to make any changes to your existing appointment?
+PATIENT (bot): I don't have an existing appointment. I'm trying to book a new one.
+AGENT (clinic): It appears the system thinks you already have an annual checkup appointment on file.
+AGENT (clinic): I recommend speaking with a team member to clear this up.
+AGENT (clinic): Would you like me to transfer you to live support now?
+PATIENT (bot): Yes, please, that would be great. Thank you.
+AGENT (clinic): It looks like there may be a mix up with your records, and I can't schedule your checkup right now. I can connect you to our patient support team for help.
+AGENT (clinic): Please stay on the line while I transfer you.
+AGENT (clinic): Connecting you to a representative.

@@ -1,0 +1,17 @@
+# Transcript - call-03-info
+# Room: batch-info-07-90a50f
+# Recorded: 2026-06-26T15:32:14
+
+AGENT (clinic): This call may be recorded for quality and training purposes. Thank you for calling Pivot Point Orthopedics. Would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Casey Nguyen. I actually just had a quick question, I don't need to create a profile right now.
+AGENT (clinic): Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes. How may I help you today?
+PATIENT (bot): Okay, great. I was wondering what your weekend hours are.
+AGENT (clinic): Pivot Point Orthopaedics is open Monday through Friday. We are closed on weekends. If you need to schedule an appointment or have questions, I can help you now.
+PATIENT (bot): Okay, thanks. Do you accept Blue Cross Blue Shield PPO insurance?
+AGENT (clinic): Yes. Pivot Point Orthopaedics accepts most insurance plans, including Blue Cross Blue Shield PPE If you need to update your insurance, or have more questions about coverage, just let me know.
+PATIENT (bot): Great, thank you. And one more thing, do you have parking there, or where's the best place to park?
+AGENT (clinic): Yes. There is free patient parking available in the surface lot right in front of the building. Let me know if you have any other questions.
+PATIENT (bot): Okay, that answers all my questions. Thanks so much for your help!
+
+AGENT (clinic): You're welcome. If you need anything else from Pivot Point Orthopaedics, just give us a call. Have a great day.

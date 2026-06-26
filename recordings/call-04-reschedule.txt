@@ -1,0 +1,49 @@
+# Transcript - call-04-reschedule
+# Room: batch-reschedule-03-c6f5b4
+# Recorded: 2026-06-26T15:23:14
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm Jordan Blake. I'm calling because I need to reschedule an appointment.
+AGENT (clinic): Would you like to create a demo patient profile so I can help you reschedule your appointment?
+PATIENT (bot): Oh,
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): I'm already a patient. My name is Jordan Blake.
+AGENT (clinic): I do not see a patient profile for you yet.
+AGENT (clinic): Would you like to create a demo patient profile now so I can help with your appointment?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): I'm Jordan Blake, and I'm an existing patient.
+AGENT (clinic): I understand you are Jordan Blake in an existing patient
+AGENT (clinic): I do not see your profile in the system yet. Would you like to create a demo patient profile now so I can help reschedule your appointment?
+PATIENT (bot): I'm an existing patient, my date of birth is July 2nd, 1985. I have an appointment this Thursday at 2 PM with Dr. Patel that I need to move.
+AGENT (clinic): I want to help you reschedule your appointment.
+AGENT (clinic): I do not see your profile in the system yet.
+AGENT (clinic): Would you like to create a demo patient profile so I can assist with your request?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): I'm
+AGENT (clinic): To help you reschedule,
+AGENT (clinic): I need to create a demo patient profile for you.
+PATIENT (bot): I
+AGENT (clinic): Can I go ahead and do that using your name?
+AGENT (clinic): Jordan Blake?
+PATIENT (bot): Okay, yes, that's fine.
+AGENT (clinic): Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Okay. So, as I mentioned, I need to reschedule my appointment that's this Thursday at 2 PM with Dr. Patel. Something came up at work.
+AGENT (clinic): I see an upcoming appointment for you on Monday, July sixth at nine thirty AM with doctor Zee Bignew Lukowski at Nashville, two two zero Athens Way.
+AGENT (clinic): I do not see an appointment this Thursday at two PM with doctor Patel.
+PATIENT (bot): Hmm,
+AGENT (clinic): Is it possible your appointment is with doctor Lukowski on July sixth or could it be under a different name or date?
+PATIENT (bot): No, it's definitely Dr. Patel. I wonder if it's under my married
+AGENT (clinic): Thanks for clarifying.
+AGENT (clinic): I only see the July sixth appointment with doctor Lukowski in your record. Would you like to reschedule that one, or is it possible your appointment with doctor Patel was booked under a different name or phone number?
+PATIENT (bot): It would be under Jordan Blake, that's my name. I'm not sure why it's not showing up. It's for this Thursday at
+AGENT (clinic): I only see the July sixth appointment with doctor Lukowski under your name.
+AGENT (clinic): Would you like to reschedule that appointment?
+AGENT (clinic): Or would you like me to transfer you to live support for help with the doctor Patel appointment?
+PATIENT (bot): Could you transfer me to live support please?
+AGENT (clinic): I'm not able to find your appointment in the system.
+AGENT (clinic): I can connect you to our patient support team for further help.
+AGENT (clinic): Please stay on the line while I transfer you.
+AGENT (clinic): Connecting you to a representative.
+PATIENT (bot): Okay,
+AGENT (clinic): Please wait.

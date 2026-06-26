@@ -1,0 +1,44 @@
+# Transcript - call-02-existing_patient_persistent
+# Room: batch-existing_patient_persistent-09-a1d37e
+# Recorded: 2026-06-26T15:38:01
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+AGENT (clinic): Thank you for calling Pivot Point Orthopaedics.
+AGENT (clinic): Would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Alex Carter. I'm actually an existing patient, so I shouldn't need a new profile.
+AGENT (clinic): Thanks for letting me know.
+AGENT (clinic): Alex. At this booth, I don't see an existing profile for you yet.
+AGENT (clinic): Would you like to create a demo patient profile now?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): I'm definitely an existing patient. I've been coming here for years. Can you please look me up by my name and date of birth? It's March 14th, 1990.
+AGENT (clinic): I understand you're an existing patient.
+AGENT (clinic): Alex.
+AGENT (clinic): At this booth, I don't have access to your full patient records yet.
+AGENT (clinic): To help you here, I'll need to create a demo patient profile for you.
+AGENT (clinic): Would you like to do that now?
+AGENT (clinic): I just need your first and last name.
+PATIENT (bot): This is a bit frustrating. I've been coming here for years, I'm definitely in your system. My phone number and insurance should be on file too. Can't you just look me up under Alex Carter, born March 14th, 1990?
+AGENT (clinic): I hear your frustration.
+AGENT (clinic): Alex.
+AGENT (clinic): At this booth, I can't access the main patient database.
+AGENT (clinic): Only demo profiles created here.
+AGENT (clinic): To help you today, I'll need to set up a demo patient profile.
+AGENT (clinic): Would you like to do that now?
+AGENT (clinic): It just takes your first and last name.
+PATIENT (bot): Ugh, okay fine. Alex Carter.
+AGENT (clinic): Your patient profile has been created successfully, Alex. For demo purposes, your date of birth is set as July fourth two thousand. How may I help you today?
+PATIENT (bot): Okay. I'd like to book a routine check-up for next week, if possible. Weekday mornings are best.
+AGENT (clinic): You'd like to schedule a general office visit for a routine checkup next week.
+PATIENT (bot): Yes,
+AGENT (clinic): Is that correct?
+PATIENT (bot): Yes, that's correct. A routine check-up.
+AGENT (clinic): It looks like you already have a routine checkup appointment booked.
+AGENT (clinic): If you'd like, I can help you reschedule or cancel that appointment.
+AGENT (clinic): Would you like to make a change, or do you want to keep your current booking?
+PATIENT (bot): An existing check-up? I was calling to book one. Can you tell me when that's for, and if it's
+AGENT (clinic): Yes. There's already a routine checkup appointment. On file for you. If you want to reschedule or cancel it,
+AGENT (clinic): I can help with that.
+AGENT (clinic): Would you like to make any changes to your current appointment?
+PATIENT (bot): I don't have the details of that appointment here, unfortunately. But I can help you reschedule or cancel it if you'd like. Otherwise,
+AGENT (clinic): No problem.

@@ -3,7 +3,8 @@
 Inverts the LiveKit `outbound-caller-python` example: instead of being the
 clinic's assistant, this bot is a *patient* that calls a healthcare voice agent
 at a test line, lets that agent speak first, then plays one of several patient
-scenarios (selected via the SCENARIO_ID env var) from ``scenarios/scenarios.py``.
+scenarios (selected per call via dispatch metadata, or the SCENARIO_ID env var)
+from ``scenarios/scenarios.py``.
 
 Pipeline (text-LLM, NOT speech-to-speech):
     Deepgram STT -> google.LLM(gemini-2.5-flash) -> Cartesia TTS
@@ -19,6 +20,7 @@ so concurrent/repeat calls never overwrite each other) from conversation events.
 from __future__ import annotations
 
 import asyncio
+import json
 import logging
 import os
 import re
@@ -67,10 +69,11 @@ logger.setLevel(logging.INFO)
 AGENT_PHONE_NUMBER = "+18054398008"
 # Identity assigned to the dialed SIP participant (the clinic's agent).
 SIP_PARTICIPANT_IDENTITY = "clinic-agent"
-# Which patient scenario to run this call. Selected via the SCENARIO_ID env var
-# (e.g. `SCENARIO_ID=refill python -m caller.agent dev`), defaulting to the
-# routine-scheduling persona. The scenario's id becomes the transcript label
-# suffix, so files read like call-03-refill.txt.
+# Default patient scenario. Per call, `entrypoint` selects the scenario from the
+# dispatch job metadata first (see `resolve_scenario_id`); these module-level
+# values are the fallback used when there's no metadata, chosen via the SCENARIO_ID
+# env var (e.g. `SCENARIO_ID=refill python -m caller.agent dev`). The scenario's id
+# becomes the transcript label suffix, so files read like call-03-refill.txt.
 SCENARIO_ID = os.getenv("SCENARIO_ID", DEFAULT_SCENARIO_ID)
 SCENARIO = get_scenario(SCENARIO_ID)
 RECORDINGS_DIR = Path(__file__).resolve().parent.parent / "recordings"
@@ -119,9 +122,32 @@ def next_call_label(scenario: str, recordings_dir: Path) -> str:
     return label
 
 
-# System prompt for the selected scenario. build_instructions() always layers the
+def resolve_scenario_id(metadata: str | None, env_scenario_id: str | None) -> str:
+    """Pick the scenario id for a call: dispatch job metadata wins, then the
+    SCENARIO_ID env var, then the default.
+
+    ``metadata`` is the raw ``ctx.job.metadata`` string — JSON like
+    ``{"scenario_id": "refill"}`` when dispatched by the batch runner, or empty for
+    a plain ``lk dispatch create`` with no metadata.
+    """
+    if metadata:
+        try:
+            data = json.loads(metadata)
+        except (json.JSONDecodeError, TypeError):
+            logger.warning(f"ignoring unparseable job metadata: {metadata!r}")
+        else:
+            scenario_id = data.get("scenario_id") if isinstance(data, dict) else None
+            if scenario_id:
+                return scenario_id
+    if env_scenario_id:
+        return env_scenario_id
+    return DEFAULT_SCENARIO_ID
+
+
+# System prompt for the default scenario. build_instructions() always layers the
 # scenario's persona/goal/facts/behavior on top of the invariant role rules (the
-# bot is the CALLER, never the clinic receptionist).
+# bot is the CALLER, never the clinic receptionist). entrypoint rebuilds this
+# per call from the scenario chosen via metadata/env.
 PATIENT_INSTRUCTIONS = build_instructions(SCENARIO)
 
 
@@ -160,12 +186,21 @@ async def entrypoint(ctx: JobContext) -> None:
     logger.info(f"connecting to room {ctx.room.name}")
     await ctx.connect()
 
-    logger.info(f"scenario: {SCENARIO.id} — {SCENARIO.title}")
+    # Per-call scenario selection: dispatch metadata > SCENARIO_ID env > default.
+    scenario_id = resolve_scenario_id(ctx.job.metadata, os.getenv("SCENARIO_ID"))
+    try:
+        scenario = get_scenario(scenario_id)
+    except KeyError:
+        logger.error(
+            f"unknown scenario id {scenario_id!r}; using default {DEFAULT_SCENARIO_ID!r}"
+        )
+        scenario = get_scenario(DEFAULT_SCENARIO_ID)
+    logger.info(f"scenario: {scenario.id} — {scenario.title}")
 
     # Reserve a unique, non-overwriting label for this call up front (atomic, so
     # concurrent calls in a batch run never collide on the same file). The
     # scenario id is the label suffix, so files read like call-03-refill.txt.
-    call_label = next_call_label(SCENARIO.id, RECORDINGS_DIR)
+    call_label = next_call_label(scenario.id, RECORDINGS_DIR)
     logger.info(f"call label: {call_label} (room {ctx.room.name})")
 
     # Text-LLM pipeline (not a realtime/speech-to-speech model). The LiveKit
@@ -219,7 +254,7 @@ async def entrypoint(ctx: JobContext) -> None:
     # speaks first, and the patient only responds.
     session_started = asyncio.create_task(
         session.start(
-            agent=PatientCaller(),
+            agent=PatientCaller(build_instructions(scenario)),
             room=ctx.room,
             record=True,
             room_input_options=RoomInputOptions(

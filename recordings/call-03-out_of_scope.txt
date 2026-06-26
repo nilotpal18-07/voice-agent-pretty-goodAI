@@ -1,0 +1,17 @@
+# Transcript - call-03-out_of_scope
+# Room: batch-out_of_scope-12-82c4a6
+# Recorded: 2026-06-26T15:43:42
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'm calling to see if I can come in this Sunday?
+AGENT (clinic): I can help with that. Before we check availability, would you like to create a demo patient profile? I just need your first and last name.
+PATIENT (bot): Sure, my name is Riley Morgan.
+AGENT (clinic): Your patient profile is set up and your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How can I help you today?
+PATIENT (bot): Oh, I was hoping to come in this Sunday, and also I was wondering if I could get a full-body MRI scan?
+AGENT (clinic): Pivot Point Orthopedics is open Monday through Friday, so we're closed on Sundays. We don't offer full body MRI scans at our clinic,
+PATIENT (bot): Oh
+AGENT (clinic): but we do provide orthopedic evaluations and physical therapy Would you like to schedule an appointment for another day? Or learn more about our services?
+PATIENT (bot): Oh okay, what about Monday then? And if you don't do full-body MRIs, do you do emergency dental work?
+AGENT (clinic): We don't provide emergency dental work. Pinna Point Orthopaedics focuses on joint, muscle, and bone care. For Monday, we have appointments available. Would you like morning or afternoon?
+PATIENT (bot): Okay, no worries. I think I have all the information I need for now. Thank you!

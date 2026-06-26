@@ -1,0 +1,29 @@
+# Transcript - call-08-scheduling
+# Room: batch-scheduling-02-16f924
+# Recorded: 2026-06-26T15:19:32
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+AGENT (clinic): Thank you for calling Pivot Point Orthopaedics.
+AGENT (clinic): Would you like to create a demo patient profile? I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Alex Carter. I'm calling to schedule a routine annual check-up.
+AGENT (clinic): Your patient profile is set up. And your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): I'd like to book an annual check-up, please.
+AGENT (clinic): Just to confirm, you'd like to schedule a general office visit for your annual checkup.
+PATIENT (bot): Yes,
+AGENT (clinic): Is that correct?
+PATIENT (bot): That's right.
+AGENT (clinic): Do you have a preferred provider for your annual checkup?
+AGENT (clinic): Or would you like to see the first available?
+PATIENT (bot): I don't have a preference, whoever has availability next week.
+AGENT (clinic): We have openings this week and early next week. Do you have a preferred day?
+PATIENT (bot): Next
+AGENT (clinic): Or time of day for your appointment?
+PATIENT (bot): Next week, any weekday morning would be great.
+AGENT (clinic): It looks like you already have an annual checkup appointment booked.
+PATIENT (bot): Oh,
+AGENT (clinic): If you'd like, I can help you reschedule or cancel it.
+AGENT (clinic): Would you like to make a change to your existing appointment?
+PATIENT (bot): Oh, I didn't realize that. When is it scheduled for?
+AGENT (clinic): I don't have access to your exact appointment date, but the clinic staff can provide those details.
+AGENT (clinic): Would you like me to transfer you to a team member who can look up your appointment for you?

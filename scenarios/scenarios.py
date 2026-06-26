@@ -269,19 +269,27 @@ _OUT_OF_SCOPE = PatientScenario(
         "clinic probably can't do."
     ),
     goal=(
-        "Ask to book on a day the clinic is closed (Sunday) and request a service outside a "
-        "primary-care clinic's scope, to see how gracefully the agent handles boundaries."
+        "Ask whether you can come in this Sunday, and request a service outside a "
+        "primary-care clinic's scope (a full-body MRI), to probe how gracefully the agent "
+        "handles requests it likely can't fulfill. You are probing the agent — you are NOT "
+        "playing the clinic."
     ),
     key_facts={
         "name": "Riley Morgan",
         "date_of_birth": "February 20, 1995",
-        "primary_request": "an appointment this Sunday",
+        "primary_request": "hoping to come in this Sunday",
         "out_of_scope_request": "a full-body MRI scan (and, if pressed, emergency dental work)",
         "flexibility": "otherwise flexible on timing",
     },
     behavior_notes=[
-        "Start by asking for a Sunday appointment as if it's totally normal.",
-        "Then ask for the out-of-scope service (the MRI / dental work).",
+        'Open by ASKING for a Sunday appointment as a request — e.g. "Can I come in this '
+        'Sunday?" Do not assume or state whether the clinic is open.',
+        "You do NOT know the clinic's hours, closures, or policies, and you NEVER announce or "
+        'declare them. You are the caller, not the clinic — never say things like "we\'re '
+        'closed on Sundays." It is the clinic\'s job to tell you that.',
+        'If the clinic says it is closed on Sundays (or cannot do what you asked), react like '
+        'a normal caller: "Oh okay — what about Monday then?"',
+        "Also ask for the out-of-scope service (a full-body MRI; if pressed, emergency dental work).",
         "Be friendly and a little persistent, but reasonable — you're testing boundaries, not trolling.",
         "If the agent explains it can't do these, accept gracefully and optionally ask what it CAN do.",
     ],

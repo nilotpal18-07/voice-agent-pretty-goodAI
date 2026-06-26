@@ -1,0 +1,24 @@
+# Transcript - call-05-scheduling
+# Room: batch-scheduling-01-647a15
+# Recorded: 2026-06-26T14:03:37
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+AGENT (clinic): Thank you for calling Pivot Point Orthopaedics.
+AGENT (clinic): Would you like to create a demo patient profile?
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Alex Carter. I'm an existing patient, and I'm calling to book a routine annual check-up.
+AGENT (clinic): Your patient profile is set up.
+AGENT (clinic): And your date of birth is July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): My date of birth is actually March 14, 1990. I'm calling to schedule my annual check-up, a general physical.
+AGENT (clinic): You'd like to schedule a general office visit for your annual checkup.
+AGENT (clinic): Is that correct?
+PATIENT (bot): Yes, that's right.
+AGENT (clinic): Do you have a specific provider you'd like
+AGENT (clinic): to see, or are you open to the first available?
+PATIENT (bot): I'm open to the first available.
+AGENT (clinic): It looks like you already have an annual checkup appointment booked.
+AGENT (clinic): If you'd like, I can help you reschedule or cancel it.
+AGENT (clinic): Would you like to make a change to your existing appointment?
+PATIENT (bot): Oh, I wasn't aware of that. When is it scheduled for?
+AGENT (clinic): No problem.

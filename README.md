@@ -79,6 +79,31 @@ its `id` becomes the transcript suffix (e.g. `call-03-refill.txt`). Available:
 Each scenario layers its persona/goal/facts/behavior on top of the invariant
 role rules (the bot is always the *caller*, never the clinic receptionist).
 
+### Batch runner (many calls automatically)
+
+To generate a set of recordings without hand-running each call, use the sequential
+batch runner. It drives a **single** long-running worker, passing the scenario id
+in each dispatch's job metadata, and waits for each call to finish before starting
+the next (real PSTN calls to one test line — sequential avoids overlap).
+
+```bash
+# 1. Start ONE worker and leave it running (it now reads the scenario per call
+#    from dispatch metadata, so you do NOT need a worker per scenario):
+python -m caller.agent dev
+
+# 2. In another terminal, run the batch (default: 2x each of the 6 scenarios = 12):
+python -m caller.batch_runner
+
+# Custom plan and timing:
+python -m caller.batch_runner --plan scheduling=3,refill=2,info=1
+python -m caller.batch_runner --per-call-timeout 240 --delay 10
+```
+
+The runner prints an end-of-run summary (scenario, room, transcript filename,
+completed/timeout/failed) and flags transcripts that look like empty **stubs** —
+a reserved call number whose call failed before any conversation — so you can tell
+real calls from stubs when feeding them to the analysis harness later.
+
 ### Recordings
 
 - **Transcript** (automatic, local): written to

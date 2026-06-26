@@ -1,0 +1,33 @@
+# Transcript - call-07-scheduling
+# Room: batch-scheduling-01-f9ee4d
+# Recorded: 2026-06-26T15:17:26
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi,
+AGENT (clinic): Thank you. PIVOT Point Orthopedics.
+PATIENT (bot): Hi
+AGENT (clinic): Would you like to create a demo patient profile,
+AGENT (clinic): I just need your first and last name to get started.
+PATIENT (bot): No, I'm actually an existing patient. My name is Alex Carter.
+AGENT (clinic): No problem. Alex, since there's no profile for you yet, you can scan the QR code at the booth later to create one.
+AGENT (clinic): Is there anything else I can help you with today?
+PATIENT (bot): Oh, I think there might be a misunderstanding. I'm actually calling to book an appointment. I'm already an existing patient, so I should have a profile somewhere.
+AGENT (clinic): Thanks for clarifying, Alex. I don't see a profile for you in the system yet.
+AGENT (clinic): If you'd like, I can help you create a demo patient profile now so we can move forward with booking your appointment.
+AGENT (clinic): Would you like to do that?
+PATIENT (bot): I'm an existing patient, so I shouldn't need a demo profile. My date of birth is March 14, 1990. Can you check under that, please? I'm trying to book a routine annual check-up.
+AGENT (clinic): I understand you're an existing patient. Alex, with the date of birth of March fourteenth nineteen ninety. However, I still don't see a profile for you in the system. Book your appointment, I'll need to create a demo patient profile first. Would you like to proceed with that now?
+PATIENT (bot): Okay, if that's what we need to do to get an appointment booked, then yes, let's go ahead and create that demo profile.
+AGENT (clinic): Your patient profile has been created successfully. And your date of birth is set as July fourth two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Okay, great. I'd like to book a routine annual check-up, a general physical. I'm hoping to get something next week, any weekday, mornings preferred.
+AGENT (clinic): Just to confirm, you'd like to schedule a general office visit for a routine annual checkup.
+AGENT (clinic): Is that correct?
+PATIENT (bot): Yes, that's right. A routine annual check-up.
+AGENT (clinic): It looks like you already have a routine annual checkup booked.
+AGENT (clinic): If you'd like, I can help you reschedule or cancel that appointment.
+AGENT (clinic): Would you like to make a change, or do you want to keep your current appointment?
+PATIENT (bot): Oh, no, that can't be right. I don't have a routine check-up booked. I'm trying to schedule one for next week. I think there might
+AGENT (clinic): I understand that's unexpected. Would you like me to connect you with a team member who can look into this and help sort it out?
+PATIENT (bot): Yes, please. That would be great. I'd appreciate it if someone could help me figure this out.
+AGENT (clinic): Connecting you to a representative.

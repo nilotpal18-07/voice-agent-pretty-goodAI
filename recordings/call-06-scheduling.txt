@@ -1,0 +1,25 @@
+# Transcript - call-06-scheduling
+# Room: batch-scheduling-02-059152
+# Recorded: 2026-06-26T14:05:54
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+AGENT (clinic): Thank you for calling Pivot Point Orthopedics.
+AGENT (clinic): Would you like to create a demo patient profile I just need your first and last name to get started.
+PATIENT (bot): Hi, I'm Alex Carter. I'm an existing patient, and I'm calling to book a routine annual check-up.
+AGENT (clinic): Your patient profile is set up. And your date of birth is July fourth two thousand for demo purposes.
+PATIENT (bot): Actually,
+AGENT (clinic): How may I help you today?
+PATIENT (bot): My date of birth is March 14, 1990. I'm calling to book a routine annual check-up.
+AGENT (clinic): Thanks, Alex.
+AGENT (clinic): Do you have a specific provider you'd like to see for your annual checkup, or are you open to any available provider?
+PATIENT (bot): I'm open to any available provider.
+AGENT (clinic): It looks like you already have a root annual checkup booked. If you'd like, I can help you reschedule or cancel that appointment.
+AGENT (clinic): What would you like to do?
+PATIENT (bot): Oh, I don't think I have one booked. I'm trying to book a *new* routine annual check-up.
+AGENT (clinic): I see. Since the system shows an existing annual checkup appointment, would you like me to check the details of that appointment? Would you prefer to speak with a team member to clear this up?
+PATIENT (bot): Could I speak with a team member, please?
+AGENT (clinic): It looks like there may be a possible duplicate appointment I'll connect you to our patient support team to help sort this out.
+PATIENT (bot): Okay,
+AGENT (clinic): Please stay on the line.
+AGENT (clinic): Connecting you to a representative.
+AGENT (clinic): Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye.
