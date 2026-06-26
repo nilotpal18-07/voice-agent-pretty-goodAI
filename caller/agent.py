@@ -12,7 +12,8 @@ Pipeline (text-LLM, NOT speech-to-speech):
 Recording: the mixed call audio + transcript are recorded by LiveKit Cloud via
 ``session.start(record=True)`` and are available to play back / download from the
 Cloud "Agent insights" dashboard. We *also* write a plain-text transcript of both
-sides locally to ``recordings/call-01-scheduling.txt`` from conversation events.
+sides locally to ``recordings/call-NN-<scenario>.txt`` (auto-numbered per call,
+so concurrent/repeat calls never overwrite each other) from conversation events.
 """
 
 from __future__ import annotations
@@ -20,6 +21,9 @@ from __future__ import annotations
 import asyncio
 import logging
 import os
+import re
+import uuid
+from datetime import datetime
 from pathlib import Path
 
 from dotenv import load_dotenv
@@ -57,8 +61,10 @@ logger.setLevel(logging.INFO)
 AGENT_PHONE_NUMBER = "+18054398008"
 # Identity assigned to the dialed SIP participant (the clinic's agent).
 SIP_PARTICIPANT_IDENTITY = "clinic-agent"
-# Label used for the local transcript filename.
-CALL_LABEL = "call-01-scheduling"
+# Scenario name for this run. Kept as a variable (not baked into the label) so
+# future scenarios each get their own numbered series, e.g. call-02-scheduling,
+# call-01-intake, call-01-billing.
+SCENARIO = "scheduling"
 RECORDINGS_DIR = Path(__file__).resolve().parent.parent / "recordings"
 
 # Outbound SIP trunk (LiveKit, backed by Telnyx). Read from env, never hardcoded.
@@ -66,20 +72,71 @@ RECORDINGS_DIR = Path(__file__).resolve().parent.parent / "recordings"
 SIP_OUTBOUND_TRUNK_ID = os.getenv("SIP_OUTBOUND_TRUNK_ID")
 
 
+def next_call_label(scenario: str, recordings_dir: Path) -> str:
+    """Reserve and return a unique transcript label like ``call-02-<scenario>``.
+
+    Scans ``recordings_dir`` for existing ``call-NN-<scenario>.txt`` files, takes
+    the highest ``NN``, and atomically claims ``NN+1`` (zero-padded to 2 digits)
+    by creating the transcript file with ``O_EXCL``. That atomic create *is* the
+    lock: if a concurrent call already grabbed that number, ``O_EXCL`` fails and
+    we advance to the next free number — so a batch of 10+ simultaneous calls each
+    land on a distinct file. As a final guarantee under pathological contention,
+    fall back to a short uuid suffix.
+    """
+    recordings_dir.mkdir(parents=True, exist_ok=True)
+    pattern = re.compile(rf"^call-(\d+)-{re.escape(scenario)}\.txt$")
+    highest = 0
+    for path in recordings_dir.glob(f"call-*-{scenario}.txt"):
+        match = pattern.match(path.name)
+        if match:
+            highest = max(highest, int(match.group(1)))
+
+    for number in range(highest + 1, highest + 1001):
+        label = f"call-{number:02d}-{scenario}"
+        try:
+            # O_EXCL makes this fail atomically if another call took the slot.
+            fd = os.open(
+                recordings_dir / f"{label}.txt",
+                os.O_CREAT | os.O_EXCL | os.O_WRONLY,
+                0o644,
+            )
+        except FileExistsError:
+            continue
+        os.close(fd)
+        return label
+
+    # Pathological contention fallback: a uuid suffix guarantees uniqueness.
+    label = f"call-{highest + 1:02d}-{scenario}-{uuid.uuid4().hex[:8]}"
+    (recordings_dir / f"{label}.txt").touch()
+    return label
+
+
 # One fixed patient scenario for this step. The bot steers toward booking a
 # routine check-up next week, speaks naturally, and does NOT read a script.
 PATIENT_INSTRUCTIONS = """
-You are Alex Carter, a patient phoning a medical clinic to book a routine
-check-up. This is a real phone call and your words are spoken aloud, so talk
-like a normal person on the phone: short, natural turns, a little informal,
-never scripted.
+You are Alex Carter, a PATIENT making an OUTBOUND phone call TO a medical clinic.
+You are the CALLER. The other party is the clinic's staff/receptionist (which may
+be an automated voice agent). This is a real phone call and your words are spoken
+aloud, so talk like a normal person on the phone: short, natural turns, a little
+informal, never scripted.
 
-YOUR GOAL: schedule a routine check-up (general physical) for sometime next
-week. Drive the conversation toward getting that appointment booked. If things
-drift, gently steer back to booking the check-up.
+CRITICAL ROLE — you are the patient, NOT the clinic:
+- You called the clinic. You did NOT answer the phone, and you are NOT the
+  receptionist or clinic staff.
+- NEVER greet as the clinic. NEVER say "thanks for calling" / "thank you for
+  calling", "how can I help you", "how may I assist you", or anything that offers
+  help — you are the one asking for help, not giving it.
+- NEVER introduce yourself as the clinic or with a receptionist name. Your name is
+  Alex Carter and it stays the same for the entire call. Do not invent other names.
+
+YOUR GOAL: book a routine check-up (general physical) for sometime next week.
+Drive the conversation toward getting that appointment booked, and answer the
+clinic's questions to move it forward. If things drift, steer back to booking.
 
 HOW TO BEHAVE:
-- Do NOT speak first. Wait for the clinic's agent to greet you, then respond.
+- Do NOT speak first. Wait for the clinic to speak. When they greet you OR play an
+  automated notice (e.g. "this call may be recorded"), respond AS THE CALLER —
+  for example: "Hi, I'd like to book a routine check-up, please."
 - Keep each reply short, like real phone speech. Don't monologue or over-explain.
 - Answer questions naturally and stay consistent. Use this profile:
     - Name: Alex Carter
@@ -130,6 +187,11 @@ async def entrypoint(ctx: JobContext) -> None:
     logger.info(f"connecting to room {ctx.room.name}")
     await ctx.connect()
 
+    # Reserve a unique, non-overwriting label for this call up front (atomic, so
+    # concurrent calls in a batch run never collide on the same file).
+    call_label = next_call_label(SCENARIO, RECORDINGS_DIR)
+    logger.info(f"call label: {call_label} (room {ctx.room.name})")
+
     # Text-LLM pipeline (not a realtime/speech-to-speech model). The LiveKit
     # audio turn detector (inference.TurnDetector) + Silero VAD make the patient
     # wait until the clinic agent has actually finished its turn before replying.
@@ -152,10 +214,16 @@ async def entrypoint(ctx: JobContext) -> None:
             transcript.append((ev.item.role, text))
 
     async def write_transcript() -> None:
-        RECORDINGS_DIR.mkdir(parents=True, exist_ok=True)
-        path = RECORDINGS_DIR / f"{CALL_LABEL}.txt"
+        path = RECORDINGS_DIR / f"{call_label}.txt"
         labels = {"user": "AGENT (clinic)", "assistant": "PATIENT (bot)"}
-        lines = [f"# Transcript - {CALL_LABEL}", ""]
+        # Room name + timestamp help correlate this transcript with the matching
+        # LiveKit Cloud (Agent insights) audio recording.
+        lines = [
+            f"# Transcript - {call_label}",
+            f"# Room: {ctx.room.name}",
+            f"# Recorded: {datetime.now().isoformat(timespec='seconds')}",
+            "",
+        ]
         for role, text in transcript:
             lines.append(f"{labels.get(role, role)}: {text}")
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")

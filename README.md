@@ -63,7 +63,9 @@ listens first and only responds once the clinic agent speaks.
 ### Recordings
 
 - **Transcript** (automatic, local): written to
-  `recordings/call-01-scheduling.txt` when the call ends.
+  `recordings/call-NN-scheduling.txt` when the call ends. The `NN` auto-increments
+  per call (call-01, call-02, …) so repeat/concurrent calls never overwrite each
+  other; the scenario suffix is configurable via `SCENARIO` in `caller/agent.py`.
 - **Audio** (LiveKit Cloud): the session runs with `record=True`, so LiveKit
   records the mixed call audio + transcript + traces. Play back or download the
   audio from **Sessions → Agent insights** in the LiveKit Cloud dashboard

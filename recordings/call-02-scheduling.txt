@@ -1,0 +1,31 @@
+# Transcript - call-01-scheduling
+
+AGENT (clinic): This call may be recorded for quality and training purposes.
+PATIENT (bot): Hi, I'd like to book a routine check-up, please.
+AGENT (clinic): I can help with that.
+PATIENT (bot): Great,
+AGENT (clinic): Would you like to create a demo patient profile first? I just need your first and last name to get started.
+PATIENT (bot): No, I'm an existing patient. My name is Alex Carter.
+AGENT (clinic): Thanks for letting me know, Alex. I don't see a patient profile for you yet, Would you like to create a demo patient profile now? I just need your first and last name.
+PATIENT (bot): That's odd. I'm sure I'm in your system. It's Alex Carter, and my date of birth is March 14, 1990.
+AGENT (clinic): I understand that's frustrating. Right now, I don't have access to your patient profile. Would you like me to create a demo patient profile for you so we can move forward with booking your checkup.
+PATIENT (bot): Okay, sure. It's Alex Carter.
+AGENT (clinic): Your patient profile has been created and your date of birth is set as July fourth. Two thousand for demo purposes.
+AGENT (clinic): How may I help you today?
+PATIENT (bot): Actually, my date of birth is March 14, 1990. I'd like to book a routine check-up, please.
+AGENT (clinic): Thanks for clarifying. I have your date of birth as March fourteenth nineteen ninety. Do you have a preferred provider for your routine checkup, or would you like to see the first available?
+PATIENT (bot): First available is fine. I'm hoping to get in sometime next week, in the morning if possible.
+AGENT (clinic): Let me check for morning openings next week with any available provider. One moment.
+PATIENT (bot): Okay.
+AGENT (clinic): We have an opening for a routine checkup on Wednesday, July first, at three thirty PM with Zeebigniew Vukosky, MD. Would you like to book this slot, or would you prefer to hear other available times?
+PATIENT (bot): That's an afternoon appointment. Do you have anything next week in the morning?
+AGENT (clinic): You're right. That is an afternoon slot.
+AGENT (clinic): Let me check again for morning openings next week. One moment.
+PATIENT (bot): Okay, thanks.
+AGENT (clinic): It looks like there are no morning openings next week. The earliest available slot is still Wednesday, July first, at three thirty PM with Zeebigniew Lewkowski, MD. Would you like to book that, or should I check for other dates?
+PATIENT (bot): Could you check for morning appointments the following week then?
+AGENT (clinic): There are morning openings on Monday, July sixth, You can book nine thirty AM, ten AM, or ten thirty AM with this big new Lekovsky MD, Would you like one of these times?
+PATIENT (bot): Okay, 9:30 AM on Monday, July 6th sounds good.
+AGENT (clinic): Your routine checkup is booked for Monday, July sixth at nine thirty AM with doctor Zigniew Likoski at Pivot Point Orthopedics Please bring your photo ID insurance card, a list of your current medications, and any imaging discs you have.
+AGENT (clinic): Would you like me to update your date of birth to March fourteenth nineteen ninety in your record?
+PATIENT (bot): Great, thanks!
