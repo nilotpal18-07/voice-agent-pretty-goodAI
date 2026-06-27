@@ -1,0 +1,819 @@
+{
+  "resourceLogs": [
+    {
+      "resource": {
+        "attributes": [
+          {
+            "key": "telemetry.sdk.language",
+            "value": {
+              "stringValue": "python"
+            }
+          },
+          {
+            "key": "telemetry.sdk.name",
+            "value": {
+              "stringValue": "opentelemetry"
+            }
+          },
+          {
+            "key": "telemetry.sdk.version",
+            "value": {
+              "stringValue": "1.39.1"
+            }
+          },
+          {
+            "key": "service.name",
+            "value": {
+              "stringValue": "unknown_service"
+            }
+          }
+        ]
+      },
+      "scopeLogs": [
+        {
+          "scope": {
+            "name": "outbound-caller"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782507964771563008",
+              "observedTimeUnixNano": "1782507967191090000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "connecting to room batch-reschedule-03-5b57fb"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/caller/agent.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "entrypoint"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "186"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "outbound-caller"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "be12a845-8f3e-49c7-46ed-ee1c42f73b9a"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1782507967069716992",
+              "observedTimeUnixNano": "1782507967191208000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "scenario: reschedule — Reschedule or cancel an existing appointment"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/caller/agent.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "entrypoint"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "198"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "outbound-caller"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "363551f8-0cd2-2c6b-2f72-0b9e0073e1eb"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1782507967071141888",
+              "observedTimeUnixNano": "1782507967191243000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "call label: call-02-reschedule (room batch-reschedule-03-5b57fb)"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/caller/agent.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "entrypoint"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "204"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "outbound-caller"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "bca3b875-8183-f19f-cb16-2fb131b98c11"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "livekit.agents"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782507967191483904",
+              "observedTimeUnixNano": "1782507967191562000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "RoomInputOptions and RoomOutputOptions are deprecated, use RoomOptions instead"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/agents/voice/room_io/types.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_ensure_options"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "169"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "4ca53073-476d-592a-8ecb-c04705293576"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "k/qCJURhkeM="
+            },
+            {
+              "timeUnixNano": "1782507967195353088",
+              "observedTimeUnixNano": "1782507967195420000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "adaptive interruption is disabled by default in production mode"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/agents/voice/agent_activity.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_resolve_interruption_detection"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "4047"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "fa76fb8d-b73e-7f04-80a1-66d04686e1c0"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "k/qCJURhkeM="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "outbound-caller"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782507973730155008",
+              "observedTimeUnixNano": "1782507973730732000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "clinic agent joined: clinic-agent"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/caller/agent.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "entrypoint"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "290"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "outbound-caller"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "4b93d11c-833b-bff0-2ba4-255c766f2832"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "livekit.agents"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782508015873786880",
+              "observedTimeUnixNano": "1782508015874068000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "Input is shorter by 22444 samples; silence has been prepended to align the input channel. The resulting recording may not accurately reflect the original audio. This is expected if the input device or audio input is disabled. This warning will only be shown once."
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/agents/voice/recorder_io/recorder_io.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_encode_thread"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "259"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "13a43105-15fc-85d7-eb04-f45602708332"
+                  }
+                }
+              ]
+            },
+            {
+              "timeUnixNano": "1782508076809667072",
+              "observedTimeUnixNano": "1782508076809976000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "eou detection ran after the audio eot turn was already flushed (likely a late stt final). consider raising `min_delay` in the endpointing options to accommodate slow stt. subsequent occurrences will log at debug level."
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/agents/voice/audio_recognition.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_on_missing_eot_prediction"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "1295"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "08ddf7ba-5c98-9f6d-ed3a-2bc2947b8178"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "uyao1C2Zdzc="
+            },
+            {
+              "timeUnixNano": "1782508108805234944",
+              "observedTimeUnixNano": "1782508108805529000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "failed to generate LLM completion: message='gemini llm: server error', status_code=503, retryable=True, request_id=74e068565b51, body={\n  \"error\": {\n    \"code\": 503,\n    \"message\": \"This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.\",\n    \"status\": \"UNAVAILABLE\"\n  }\n}\n Service Unavailable, retrying in 0.1s"
+              },
+              "attributes": [
+                {
+                  "key": "llm",
+                  "value": {
+                    "stringValue": "livekit.plugins.google.llm.LLM"
+                  }
+                },
+                {
+                  "key": "attempt",
+                  "value": {
+                    "intValue": "1"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/agents/llm/llm.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_main_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "251"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "4e77ff3f-c874-027f-b886-5965f1b55ea7"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "S7W3A0Jj/Zs="
+            },
+            {
+              "timeUnixNano": "1782508126594767104",
+              "observedTimeUnixNano": "1782508126595282000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "failed to generate LLM completion: message='no response generated', status_code=-1, retryable=True, request_id=58fef5249ddb, body=finish reason: FinishReason.STOP, retrying in 0.1s"
+              },
+              "attributes": [
+                {
+                  "key": "llm",
+                  "value": {
+                    "stringValue": "livekit.plugins.google.llm.LLM"
+                  }
+                },
+                {
+                  "key": "attempt",
+                  "value": {
+                    "intValue": "1"
+                  }
+                },
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/agents/llm/llm.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "_main_task"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "251"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit.agents"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "ab585354-fe0f-e70a-35ef-169e41817eeb"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "hFelM4Yt//Q="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "outbound-caller"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782508133078628096",
+              "observedTimeUnixNano": "1782508133078855000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "patient ending the call"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/caller/agent.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "end_call"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "173"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "outbound-caller"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "5545c266-e866-ecc3-d636-38cff86d14bd"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "z2WwaYCruCA="
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "livekit"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782508133326900992",
+              "observedTimeUnixNano": "1782508133327274000",
+              "severityNumber": "SEVERITY_NUMBER_WARN",
+              "severityText": "WARN",
+              "body": {
+                "stringValue": "livekit_api::signal_client:540:livekit_api::signal_client - dropping pass-through signal — no stream available"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/venv/lib/python3.13/site-packages/livekit/rtc/_ffi_client.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "ffi_event_callback"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "174"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "livekit"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "55fc4380-6615-7065-5203-e2b15cf5b43f"
+                  }
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "scope": {
+            "name": "outbound-caller"
+          },
+          "logRecords": [
+            {
+              "timeUnixNano": "1782508135658545920",
+              "observedTimeUnixNano": "1782508135658815000",
+              "severityNumber": "SEVERITY_NUMBER_INFO",
+              "severityText": "INFO",
+              "body": {
+                "stringValue": "wrote transcript to /Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/recordings/call-02-reschedule.txt"
+              },
+              "attributes": [
+                {
+                  "key": "code.file.path",
+                  "value": {
+                    "stringValue": "/Users/nilotpalrajbongshi/Documents/Personal Projects/voice-agent-pretty-goodAI/caller/agent.py"
+                  }
+                },
+                {
+                  "key": "code.function.name",
+                  "value": {
+                    "stringValue": "write_transcript"
+                  }
+                },
+                {
+                  "key": "code.line.number",
+                  "value": {
+                    "intValue": "241"
+                  }
+                },
+                {
+                  "key": "room_id",
+                  "value": {
+                    "stringValue": "RM_xt4Na69ASf5k"
+                  }
+                },
+                {
+                  "key": "job_id",
+                  "value": {
+                    "stringValue": "AJ_dNDtBXipVAxC"
+                  }
+                },
+                {
+                  "key": "logger.name",
+                  "value": {
+                    "stringValue": "outbound-caller"
+                  }
+                },
+                {
+                  "key": "lk.id",
+                  "value": {
+                    "stringValue": "2ffd1396-a5ec-014b-0e2f-a71b45115c67"
+                  }
+                }
+              ],
+              "flags": 1,
+              "traceId": "RajDESD+sRQD629aFYf6Ig==",
+              "spanId": "k/qCJURhkeM="
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

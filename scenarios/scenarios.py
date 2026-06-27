@@ -18,7 +18,7 @@ from pydantic import BaseModel, Field, field_validator
 
 # --- Invariant role rules ---------------------------------------------------
 # These survive in EVERY scenario's instructions. They encode the hardened
-# persona fix: the bot is the caller (a patient), never the clinic receptionist.
+# persona fix: the bot is the caller (a patient).
 INVARIANT_ROLE_RULES = """
 You are a PATIENT making an OUTBOUND phone call TO a medical clinic. You are the
 CALLER. The other party is the clinic's staff/receptionist (which may be an

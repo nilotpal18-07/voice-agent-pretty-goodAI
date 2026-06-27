@@ -6,7 +6,7 @@ at a test line, lets that agent speak first, then plays one of several patient
 scenarios (selected per call via dispatch metadata, or the SCENARIO_ID env var)
 from ``scenarios/scenarios.py``.
 
-Pipeline (text-LLM, NOT speech-to-speech):
+Pipeline:
     Deepgram STT -> google.LLM(gemini-2.5-flash) -> Cartesia TTS
     Silero VAD + LiveKit audio turn detector (inference.TurnDetector).
 

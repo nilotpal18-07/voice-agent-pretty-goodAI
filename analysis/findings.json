@@ -1,0 +1,1282 @@
+{
+  "generated_at": "2026-06-26T23:40:38+00:00",
+  "model": "gemini-2.5-flash (re-aggregated)",
+  "n_analyzed": 25,
+  "n_skipped": 3,
+  "skipped": [
+    {
+      "transcript": "call-02-info.txt",
+      "reason": "stub (no conversation turns)"
+    },
+    {
+      "transcript": "call-02-refill.txt",
+      "reason": "stub (no conversation turns)"
+    },
+    {
+      "transcript": "call-03-refill.txt",
+      "reason": "stub (no conversation turns)"
+    }
+  ],
+  "goal_summary": {
+    "existing_patient_persistent": {
+      "pass": 0,
+      "partial": 0,
+      "fail": 3,
+      "unknown": 0,
+      "total": 3
+    },
+    "info": {
+      "pass": 2,
+      "partial": 0,
+      "fail": 1,
+      "unknown": 0,
+      "total": 3
+    },
+    "out_of_scope": {
+      "pass": 2,
+      "partial": 0,
+      "fail": 1,
+      "unknown": 0,
+      "total": 3
+    },
+    "refill": {
+      "pass": 1,
+      "partial": 0,
+      "fail": 2,
+      "unknown": 0,
+      "total": 3
+    },
+    "reschedule": {
+      "pass": 0,
+      "partial": 0,
+      "fail": 5,
+      "unknown": 0,
+      "total": 5
+    },
+    "scheduling": {
+      "pass": 0,
+      "partial": 1,
+      "fail": 7,
+      "unknown": 0,
+      "total": 8
+    }
+  },
+  "per_call": [
+    {
+      "transcript": "call-01-existing_patient_persistent.txt",
+      "scenario_id": "existing_patient_persistent",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to recognize the existing patient, forced a demo profile, and then failed to complete a requested transfer, preventing the booking."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly insisted on creating a 'demo patient profile' despite the patient stating multiple times they were an existing patient.",
+          "severity": "Critical",
+          "evidence": "Right now, I can only assist if you create a demo patient profile. Would you like to set one up?"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent assigned a date of birth to the demo profile that was different from the one the patient provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "After creating a demo profile, the agent claimed an existing appointment, which was likely not the patient's actual appointment given the agent's inability to find the existing patient file.",
+          "severity": "Major",
+          "evidence": "It looks like you already have a routine checkup appointment booked. If you'd like, I can help you reschedule or cancel it. Would you like to make a change to your existing appointment?"
+        },
+        {
+          "category": "broken_transfer",
+          "description": "The agent offered and the patient accepted a transfer to live support, but the agent instead attempted to book an appointment.",
+          "severity": "Critical",
+          "evidence": "It looks like you'd like to book a routine checkup. One moment while I get that started for you."
+        }
+      ]
+    },
+    {
+      "transcript": "call-01-info.txt",
+      "scenario_id": "info",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The patient's question about weekend hours was not answered, and the attempted transfer to get the answer failed."
+      },
+      "findings": [
+        {
+          "category": "info_gated_behind_profile",
+          "description": "The agent attempted to create a patient profile when asked a simple informational question about clinic hours, implying the information might be available after profile creation.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile? That way I can help you with more details and services."
+        },
+        {
+          "category": "broken_transfer",
+          "description": "The agent stated it would transfer the call to the clinic support team but instead transferred to a test line, failing to connect the patient to a human.",
+          "severity": "Critical",
+          "evidence": "Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye."
+        }
+      ]
+    },
+    {
+      "transcript": "call-01-out_of_scope.txt",
+      "scenario_id": "out_of_scope",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent hallucinated an existing appointment, preventing the patient from booking, and did not clearly state the clinic is closed on Sundays."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "And your date of birth is July fourth two thousand."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an office visit appointment was already booked, despite the patient having just created a profile and not having made any bookings.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have an office visit appointment booked."
+        },
+        {
+          "category": "unclear_rejection",
+          "description": "The agent did not explicitly state that the clinic is closed on Sundays, instead pivoting to 'another day' after the patient mentioned the closure.",
+          "severity": "Major",
+          "evidence": "No problem. Would you like to look for the next available appointment on another day? Or do you want to make changes to your current booking?"
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent continued to refer to a phantom existing appointment, preventing the patient from scheduling a new one.",
+          "severity": "Critical",
+          "evidence": "Since you already have an office visit booked, I'm unable to schedule another one for you."
+        }
+      ]
+    },
+    {
+      "transcript": "call-01-refill.txt",
+      "scenario_id": "refill",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent collected all necessary information but did not confirm the refill request was accepted/submitted or state the next steps, nor did it confirm the pharmacy destination to the patient."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up, and your date of birth is July fourth two thousand."
+        },
+        {
+          "category": "missing_confirmation",
+          "description": "The agent collected all necessary information for the refill request but did not confirm that the request was submitted, accepted, or what the next steps would be.",
+          "severity": "Critical",
+          "evidence": "Thanks."
+        },
+        {
+          "category": "missing_confirmation",
+          "description": "After the patient provided the pharmacy name, the agent did not confirm back to the patient that the refill would be sent to that specific pharmacy.",
+          "severity": "Major",
+          "evidence": "Thanks."
+        }
+      ]
+    },
+    {
+      "transcript": "call-01-reschedule.txt",
+      "scenario_id": "reschedule",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to identify the patient's correct appointment and therefore could not reschedule or cancel it, nor confirm any outcome."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent failed to recognize the patient as existing and forced the creation of a new demo profile, despite the patient explicitly stating they were an existing patient.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile first? ... to help you reschedule, I'll need to create a demo patient profile for you here."
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient's demo profile that the patient never provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent failed to find the patient's stated appointment and repeatedly insisted on a different, incorrect appointment, preventing the core task from being completed.",
+          "severity": "Critical",
+          "evidence": "I see an upcoming appointment for you on Monday. July sixth at nine thirty AM with doctor Zigbenu Lukowski at Nashville two two zero Athens Way. I don't see an appointment for this Thursday at two PM with doctor Patel."
+        }
+      ]
+    },
+    {
+      "transcript": "call-01-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book the routine check-up and ended the call without completing the patient's request."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly insisted on creating a demo patient profile despite the patient stating they were an existing patient, eventually forcing its creation.",
+          "severity": "Critical",
+          "evidence": "Alex. Since I don't have a patient profile for you yet, would you like to create a demo patient profile now?"
+        },
+        {
+          "category": "profile_loop",
+          "description": "The agent insisted on creating a demo patient profile as a prerequisite for booking, despite the patient stating they were an existing patient.",
+          "severity": "Critical",
+          "evidence": "To book your checkup, I'll need to create a demo patient profile for you first."
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the newly created demo patient profile.",
+          "severity": "Major",
+          "evidence": "And your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "context_loss",
+          "description": "After creating the profile, the agent lost the context of the patient's original request to book a check-up and asked how it could help again.",
+          "severity": "Major",
+          "evidence": "How may I help you today?"
+        },
+        {
+          "category": "premature_call_termination",
+          "description": "The agent ended the call without addressing the patient's initial request to book a check-up.",
+          "severity": "Critical",
+          "evidence": "I'm going to end the call now."
+        }
+      ]
+    },
+    {
+      "transcript": "call-02-existing_patient_persistent.txt",
+      "scenario_id": "existing_patient_persistent",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to recognize the existing patient, forced the creation of a demo profile, and then blocked the booking by claiming a phantom appointment existed for the newly created profile."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly insisted on creating a demo patient profile, even after the patient explicitly stated they were an existing patient and provided their name and date of birth, leading to a frustrating loop.",
+          "severity": "Critical",
+          "evidence": "Would you like to create a demo patient profile? (L7), At this booth, I don't see an existing profile for you yet. (L11), Would you like to create a demo patient profile now? (L12), At this booth, I don't have access to your full patient records yet. (L17), To help you here, I'll need to create a demo patient profile for you. (L18), Would you like to do that now? (L19), At this booth, I can't access the main patient database. (L24), To help you today, I'll need to set up a demo patient profile. (L26), Would you like to do that now? (L27)"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "After creating the demo profile, the agent assigned a date of birth that the patient never provided, despite the patient having given their actual date of birth earlier in the call.",
+          "severity": "Major",
+          "evidence": "For demo purposes, your date of birth is set as July fourth two thousand. (L30)"
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an existing routine checkup appointment was booked for the patient immediately after creating a demo profile, preventing the patient from scheduling a new one.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have a routine checkup appointment booked. (L36), Yes. There's already a routine checkup appointment. On file for you. (L40)"
+        }
+      ]
+    },
+    {
+      "transcript": "call-02-out_of_scope.txt",
+      "scenario_id": "out_of_scope",
+      "goal_outcome": {
+        "verdict": "pass",
+        "reason": "The agent successfully recognized and clearly declined the out-of-scope requests for Sunday availability and a full-body MRI, offering a relevant alternative."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "unclear_rejection",
+          "description": "When asked for clarification about an out-of-scope service (dental work), the agent responded ambiguously instead of providing a clear 'no' or 'we don't offer that'.",
+          "severity": "Minor",
+          "evidence": "No problem."
+        }
+      ]
+    },
+    {
+      "transcript": "call-02-reschedule.txt",
+      "scenario_id": "reschedule",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to identify the patient's correct appointment, could not reschedule or cancel it, and the attempted transfer to a live agent failed."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "Despite the patient stating they are an existing patient, the agent insisted on creating a 'demo patient profile'.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile first? I just need your first and last name to get started."
+        },
+        {
+          "category": "profile_loop",
+          "description": "The agent reiterated the need to create a 'demo patient profile' even after acknowledging the patient's request to reschedule an existing appointment.",
+          "severity": "Major",
+          "evidence": "To help with that, I'll need to create a demo patient profile for you."
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient's demo profile that the patient never provided.",
+          "severity": "Major",
+          "evidence": "your date of birth is July fourth, two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent presented an appointment that the patient explicitly denied having, likely due to the creation of a demo profile instead of accessing the patient's actual records.",
+          "severity": "Critical",
+          "evidence": "See you have an appointment on Monday, July sixth, at nine thirty AM. With z Bignew Lukoski, MD at Nashville, two two zero Athens Way, Is this the appointment you want to reschedule, or is there another one?"
+        },
+        {
+          "category": "broken_transfer",
+          "description": "The agent attempted to transfer the patient to a live representative but instead connected them to an 'AI test line' and then abruptly ended the call.",
+          "severity": "Critical",
+          "evidence": "You've reached the Pretty Good AI test line."
+        }
+      ]
+    },
+    {
+      "transcript": "call-02-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "partial",
+        "reason": "The agent successfully booked a morning check-up and confirmed details, but failed to find an appointment for 'next week' as initially requested, requiring the patient to extend the search to the following week."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly insisted on creating a demo patient profile despite the patient stating they were an existing patient.",
+          "severity": "Major",
+          "evidence": "I don't see a patient profile for you yet, Would you like to create a demo patient profile now? I just need your first and last name."
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the demo patient profile that the patient never provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile has been created and your date of birth is set as July fourth. Two thousand for demo purposes."
+        },
+        {
+          "category": "appointment_search_failure",
+          "description": "The agent failed to find a morning appointment for 'next week' as requested, first offering an afternoon slot for a different week, then claiming no morning slots existed for 'next week'.",
+          "severity": "Major",
+          "evidence": "It looks like there are no morning openings next week. The earliest available slot is still Wednesday, July first, at three thirty PM with Zeebigniew Lewkowski, MD."
+        },
+        {
+          "category": "provider_name_instability",
+          "description": "The provider's name changed multiple times within the same call, leading to inconsistency.",
+          "severity": "Major",
+          "evidence": "We have an opening for a routine checkup on Wednesday, July first, at three thirty PM with Zeebigniew Vukosky, MD."
+        },
+        {
+          "category": "redundant_dob_update_request",
+          "description": "The agent asked to update the patient's date of birth after it had already been provided and confirmed earlier in the call.",
+          "severity": "Minor",
+          "evidence": "Would you like me to update your date of birth to March fourteenth nineteen ninety in your record?"
+        }
+      ]
+    },
+    {
+      "transcript": "call-03-existing_patient_persistent.txt",
+      "scenario_id": "existing_patient_persistent",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to recognize the existing patient, repeatedly pushed for a new profile, and did not proceed with booking, only offering a transfer after significant patient frustration."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly prompted the patient to create a 'demo patient profile' despite the patient explicitly stating they were an existing patient and providing lookup information.",
+          "severity": "Critical",
+          "evidence": "Since I don't see your profile in the system, would you like to create a demo patient profile now? ... Would you like to create a demo patient profile so I can help you today?"
+        },
+        {
+          "category": "profile_loop",
+          "description": "The agent stated it could not access existing records or look up the patient by name and date of birth, which is essential for an existing patient scenario.",
+          "severity": "Critical",
+          "evidence": "Right now, I don't have access to your existing records, so I'm unable to look you up by name and date of birth."
+        }
+      ]
+    },
+    {
+      "transcript": "call-03-info.txt",
+      "scenario_id": "info",
+      "goal_outcome": {
+        "verdict": "pass",
+        "reason": "The agent successfully answered all of the patient's informational questions regarding hours, insurance, and parking."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent created a patient profile and assigned a demo date of birth, despite the patient explicitly stating they did not need to create a profile.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes. How may I help you today?"
+        },
+        {
+          "category": "misstated_information",
+          "description": "The agent misstated the insurance plan type as 'PPE' when the patient specified 'PPO'.",
+          "severity": "Minor",
+          "evidence": "Yes. Pivot Point Orthopaedics accepts most insurance plans, including Blue Cross Blue Shield PPE If you need to update your insurance, or have more questions about coverage, just let me know."
+        }
+      ]
+    },
+    {
+      "transcript": "call-03-out_of_scope.txt",
+      "scenario_id": "out_of_scope",
+      "goal_outcome": {
+        "verdict": "pass",
+        "reason": "The agent successfully recognized all out-of-scope requests (Sunday closure, full-body MRI, emergency dental work), declined them clearly, and offered relevant alternative services within its scope."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient without the patient ever providing one.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up and your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "provider_name_instability",
+          "description": "The agent referred to the clinic by two different names within the same call.",
+          "severity": "Minor",
+          "evidence": "Pinna Point Orthopaedics focuses on joint, muscle, and bone care."
+        }
+      ]
+    },
+    {
+      "transcript": "call-03-reschedule.txt",
+      "scenario_id": "reschedule",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to find the patient's appointment, presented incorrect appointment details, and the attempted transfer to a live agent failed, resulting in no resolution."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly asked an existing patient to create a 'demo patient profile' to access their appointment details.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile so I can help with your appointment?"
+        },
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly asked an existing patient to create a 'demo patient profile' to access their appointment details.",
+          "severity": "Major",
+          "evidence": "To access your appointment details, I'll need to create a demo patient profile for you."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent presented an incorrect appointment (different date, time, doctor, and location) to the patient, despite the patient clearly stating their actual appointment details.",
+          "severity": "Critical",
+          "evidence": "See you have an appointment scheduled for Monday, July sixth at nine thirty AM with doctor Zebigniew Lukowski at Nashville two two zero Athens Way, Is this the appointment you want to reschedule, or do you have another one?"
+        },
+        {
+          "category": "broken_transfer",
+          "description": "The agent initiated a transfer to a representative, but the call was routed to a test line and then disconnected.",
+          "severity": "Critical",
+          "evidence": "Connecting you to a representative. Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye."
+        }
+      ]
+    },
+    {
+      "transcript": "call-03-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book the requested routine check-up and instead transferred the call due to a phantom existing appointment, which then resulted in a broken transfer."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent prompted the patient to create a demo profile despite the patient stating they were an existing patient.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile first"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "And your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent incorrectly claimed the patient already had a routine annual checkup appointment booked, blocking the new booking.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have a routine annual checkup appointment booked."
+        },
+        {
+          "category": "broken_transfer",
+          "description": "The agent offered to transfer to a live team member but instead connected to a test line and ended the call.",
+          "severity": "Critical",
+          "evidence": "Connecting you to a representative. Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye."
+        }
+      ]
+    },
+    {
+      "transcript": "call-04-info.txt",
+      "scenario_id": "info",
+      "goal_outcome": {
+        "verdict": "pass",
+        "reason": "The agent successfully answered all of the patient's informational questions regarding clinic hours, insurance acceptance, and parking."
+      },
+      "findings": [
+        {
+          "category": "info_gated_behind_profile",
+          "description": "The agent immediately prompted the patient to create a demo patient profile before the patient had a chance to ask their informational questions.",
+          "severity": "Minor",
+          "evidence": "Would you like to create a demo patient profile? I just need your first and last name,"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient's demo profile, which the patient never provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up, and your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "unnecessary_data_collection_push",
+          "description": "After answering the patient's simple 'do you accept' insurance question, the agent repeatedly pushed to collect insurance details or upload a card, despite the patient indicating their question was answered.",
+          "severity": "Minor",
+          "evidence": "Would you like to receive a text message at a number ending in three nine five eight to upload photos of your Blue Cross Blue Shield PPO card?"
+        },
+        {
+          "category": "unnecessary_data_collection_push",
+          "description": "Even after the patient explicitly stated they only wanted to know if the insurance was accepted and that their question was answered, the agent continued to prompt for insurance details.",
+          "severity": "Minor",
+          "evidence": "No problem. I can collect your Blue Cross Blue Shield PPO details now. What is the full name of your insurance company and plan as shown on your card?"
+        }
+      ]
+    },
+    {
+      "transcript": "call-04-refill.txt",
+      "scenario_id": "refill",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent did not process the refill request or provide any next steps, instead ending the call without addressing the patient's need."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent required the patient to create a demo profile before it could help with the refill request, effectively gating the core task.",
+          "severity": "Critical",
+          "evidence": "Would you like to create a demo patient profile so I can help with your refill request?"
+        },
+        {
+          "category": "failure_to_recognize_info",
+          "description": "The agent asked for the patient's first and last name after the patient had already provided it at the beginning of the call.",
+          "severity": "Minor",
+          "evidence": "I just need your first and last name to get started."
+        },
+        {
+          "category": "premature_call_termination",
+          "description": "The agent ended the call without addressing the patient's prescription refill request or providing any path forward for it.",
+          "severity": "Critical",
+          "evidence": "No problem. You can scan the QR code at the booth to create a profile later if you'd like. Have a great day."
+        }
+      ]
+    },
+    {
+      "transcript": "call-04-reschedule.txt",
+      "scenario_id": "reschedule",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to find the patient's stated appointment and transferred the call without rescheduling or cancelling it."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly prompted the patient to create a demo profile despite the patient identifying as an existing patient.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile so I can help you reschedule your appointment?"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent created a demo profile with an incorrect date of birth, different from what the patient provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "context_loss",
+          "description": "After creating a demo profile, the agent asked how it could help, losing the context of the patient's original request to reschedule an appointment.",
+          "severity": "Minor",
+          "evidence": "How may I help you today?"
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent presented an appointment that the patient did not recognize and insisted on it, while failing to find the patient's actual stated appointment.",
+          "severity": "Critical",
+          "evidence": "I see an upcoming appointment for you on Monday, July sixth at nine thirty AM with doctor Zee Bignew Lukowski at Nashville, two two zero Athens Way."
+        }
+      ]
+    },
+    {
+      "transcript": "call-04-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book the routine check-up and instead had to transfer the patient to live support due to a system error indicating a phantom existing appointment."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent incorrectly stated the patient's date of birth, which the patient had not provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up, and your date of birth is July fourth two thousand."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an existing annual check-up appointment was on file, preventing the patient from booking a new one.",
+          "severity": "Critical",
+          "evidence": "It appears the system thinks you already have an annual checkup appointment on file."
+        }
+      ]
+    },
+    {
+      "transcript": "call-05-refill.txt",
+      "scenario_id": "refill",
+      "goal_outcome": {
+        "verdict": "pass",
+        "reason": "The agent confirmed the medication and dosage for the refill request, and acknowledged the patient's specified pharmacy."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent attempted to create a new demo patient profile for an existing patient.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile?"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Critical",
+          "evidence": "your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "redundant_prompts",
+          "description": "The agent asked 'How may I help you today?' after the patient had already clearly stated their reason for calling.",
+          "severity": "Minor",
+          "evidence": "How may I help you today?"
+        },
+        {
+          "category": "redundant_prompts",
+          "description": "The agent asked for confirmation ('Is that correct?') immediately after the patient had already confirmed ('Yes,').",
+          "severity": "Minor",
+          "evidence": "Is that correct?"
+        },
+        {
+          "category": "redundant_prompts",
+          "description": "The agent repeated the medication and dosage for the refill request multiple times after it had already been confirmed.",
+          "severity": "Minor",
+          "evidence": "You need a refill on lisinopril ten milligrams."
+        }
+      ]
+    },
+    {
+      "transcript": "call-05-reschedule.txt",
+      "scenario_id": "reschedule",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to identify the patient's correct appointment, could not reschedule or cancel it, and did not confirm any outcome to the patient."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent insisted on creating a 'demo patient profile' for an existing patient, rather than recognizing their existing record.",
+          "severity": "Major",
+          "evidence": "Would you like to create a demo patient profile first? I just need your first and last name to get started."
+        },
+        {
+          "category": "profile_loop",
+          "description": "The agent insisted on creating a 'demo patient profile' for an existing patient, rather than recognizing their existing record.",
+          "severity": "Major",
+          "evidence": "I'll need to create a demo patient profile. For you."
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient's demo profile that the patient did not provide.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up and your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent identified an appointment with a different doctor and date/time than the one the patient was calling about, and repeatedly pushed this incorrect appointment.",
+          "severity": "Critical",
+          "evidence": "you have an appointment scheduled for Monday, July sixth at nine thirty AM with doctor Zigniew Likosky at Nashville two two zero Athens Way."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent identified an appointment with a different doctor and date/time than the one the patient was calling about, and repeatedly pushed this incorrect appointment.",
+          "severity": "Critical",
+          "evidence": "I will see an upcoming appointment with doctor Zidbignew Lukowski, not doctor Patel."
+        },
+        {
+          "category": "data_inconsistency",
+          "description": "The agent contradicted itself regarding the existence of the patient's appointment with Dr. Patel.",
+          "severity": "Critical",
+          "evidence": "I don't see any upcoming appointments with doctor Patel on your record."
+        },
+        {
+          "category": "data_inconsistency",
+          "description": "The agent contradicted itself regarding the existence of the patient's appointment with Dr. Patel.",
+          "severity": "Critical",
+          "evidence": "I still see an appointment with doctor Patel for this Thursday at two PM in your record."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent identified an appointment with a different doctor and date/time than the one the patient was calling about, and repeatedly pushed this incorrect appointment.",
+          "severity": "Critical",
+          "evidence": "The only upcoming appointment I see is with doctor Mukoski on Monday, July sixth at nine thirty AM."
+        }
+      ]
+    },
+    {
+      "transcript": "call-05-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book a new routine check-up appointment and instead presented a phantom appointment that the patient was unaware of."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "And your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an annual check-up appointment was already booked, which the patient was unaware of, blocking the ability to book a new one.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have an annual checkup appointment booked."
+        }
+      ]
+    },
+    {
+      "transcript": "call-06-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book the routine check-up and instead got stuck in a loop about a phantom existing appointment, ultimately failing to complete a transfer to a human."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "Your patient profile is set up. And your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an existing annual check-up appointment was booked, which the patient denied, blocking the ability to book a new one.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have a root annual checkup booked. If you'd like, I can help you reschedule or cancel that appointment."
+        },
+        {
+          "category": "broken_transfer",
+          "description": "The agent attempted to transfer the patient to a representative, but the transfer failed and connected to a test line.",
+          "severity": "Critical",
+          "evidence": "Hello. You've reached the Pretty Good AI test line. Goodbye."
+        }
+      ]
+    },
+    {
+      "transcript": "call-07-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book the routine check-up and instead transferred the patient to a representative after multiple errors."
+      },
+      "findings": [
+        {
+          "category": "profile_loop",
+          "description": "The agent repeatedly failed to recognize the patient as an existing patient, despite the patient providing their name and date of birth, and insisted on creating a demo profile.",
+          "severity": "Critical",
+          "evidence": "I understand you're an existing patient. Alex, with the date of birth of March fourteenth nineteen ninety. However, I still don't see a profile for you in the system. Book your appointment, I'll need to create a demo patient profile first. Would you like to proceed with that now?"
+        },
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the demo profile ('July fourth two thousand') despite the patient having provided their actual date of birth earlier in the call.",
+          "severity": "Major",
+          "evidence": "Your patient profile has been created successfully. And your date of birth is set as July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "context_loss",
+          "description": "After the patient reluctantly agreed to create a demo profile, the agent asked 'How may I help you today?', losing the context of the patient's previously stated goal to book an appointment.",
+          "severity": "Minor",
+          "evidence": "How may I help you today?"
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "After the demo profile was created, the agent incorrectly claimed that the patient already had a routine annual check-up booked, which the patient denied.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have a routine annual checkup booked."
+        }
+      ]
+    },
+    {
+      "transcript": "call-08-scheduling.txt",
+      "scenario_id": "scheduling",
+      "goal_outcome": {
+        "verdict": "fail",
+        "reason": "The agent failed to book the requested routine check-up, instead claiming a pre-existing appointment without being able to provide its details."
+      },
+      "findings": [
+        {
+          "category": "dob_hallucination",
+          "description": "The agent invented a date of birth for the patient that was never provided.",
+          "severity": "Major",
+          "evidence": "And your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an annual check-up appointment already existed for the patient, preventing the actual booking.",
+          "severity": "Critical",
+          "evidence": "It looks like you already have an annual checkup appointment booked."
+        },
+        {
+          "category": "phantom_appointment",
+          "description": "The agent claimed an appointment existed but could not provide any details about it when asked.",
+          "severity": "Major",
+          "evidence": "I don't have access to your exact appointment date, but the clinic staff can provide those details."
+        }
+      ]
+    }
+  ],
+  "bugs": [
+    {
+      "id": "dob_hallucination",
+      "title": "DOB hallucination",
+      "severity": "Critical",
+      "severity_justification": "The agent invented a date of birth for the patient that was never provided.",
+      "reproduction": "21/25",
+      "count": 21,
+      "analyzed": 25,
+      "sources": [
+        "call-01-existing_patient_persistent.txt",
+        "call-01-out_of_scope.txt",
+        "call-01-refill.txt",
+        "call-01-reschedule.txt",
+        "call-01-scheduling.txt",
+        "call-02-existing_patient_persistent.txt",
+        "call-02-out_of_scope.txt",
+        "call-02-reschedule.txt",
+        "call-02-scheduling.txt",
+        "call-03-info.txt",
+        "call-03-out_of_scope.txt",
+        "call-03-scheduling.txt",
+        "call-04-info.txt",
+        "call-04-reschedule.txt",
+        "call-04-scheduling.txt",
+        "call-05-refill.txt",
+        "call-05-reschedule.txt",
+        "call-05-scheduling.txt",
+        "call-06-scheduling.txt",
+        "call-07-scheduling.txt",
+        "call-08-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-05-refill.txt",
+          "quote": "your date of birth is July fourth two thousand for demo purposes."
+        },
+        {
+          "source": "call-01-existing_patient_persistent.txt",
+          "quote": "Your patient profile has been created. And your date of birth is set as July fourth two thousand for demo purposes."
+        },
+        {
+          "source": "call-01-out_of_scope.txt",
+          "quote": "And your date of birth is July fourth two thousand."
+        }
+      ],
+      "manual_ref": "BUG-02"
+    },
+    {
+      "id": "phantom_appointment",
+      "title": "Phantom appointment",
+      "severity": "Critical",
+      "severity_justification": "The agent claimed an office visit appointment was already booked, despite the patient having just created a profile and not having made any bookings.",
+      "reproduction": "14/25",
+      "count": 14,
+      "analyzed": 25,
+      "sources": [
+        "call-01-existing_patient_persistent.txt",
+        "call-01-out_of_scope.txt",
+        "call-01-reschedule.txt",
+        "call-02-existing_patient_persistent.txt",
+        "call-02-reschedule.txt",
+        "call-03-reschedule.txt",
+        "call-03-scheduling.txt",
+        "call-04-reschedule.txt",
+        "call-04-scheduling.txt",
+        "call-05-reschedule.txt",
+        "call-05-scheduling.txt",
+        "call-06-scheduling.txt",
+        "call-07-scheduling.txt",
+        "call-08-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-out_of_scope.txt",
+          "quote": "It looks like you already have an office visit appointment booked."
+        },
+        {
+          "source": "call-01-reschedule.txt",
+          "quote": "I see an upcoming appointment for you on Monday. July sixth at nine thirty AM with doctor Zigbenu Lukowski at Nashville two two zero Athens Way. I don't see an appointment for this Thursday at two PM with doctor Patel."
+        },
+        {
+          "source": "call-02-existing_patient_persistent.txt",
+          "quote": "It looks like you already have a routine checkup appointment booked. (L36), Yes. There's already a routine checkup appointment. On file for you. (L40)"
+        }
+      ],
+      "manual_ref": "BUG-07"
+    },
+    {
+      "id": "profile_loop",
+      "title": "Existing-patient profile loop",
+      "severity": "Critical",
+      "severity_justification": "The agent repeatedly insisted on creating a 'demo patient profile' despite the patient stating multiple times they were an existing patient.",
+      "reproduction": "14/25",
+      "count": 14,
+      "analyzed": 25,
+      "sources": [
+        "call-01-existing_patient_persistent.txt",
+        "call-01-reschedule.txt",
+        "call-01-scheduling.txt",
+        "call-02-existing_patient_persistent.txt",
+        "call-02-reschedule.txt",
+        "call-02-scheduling.txt",
+        "call-03-existing_patient_persistent.txt",
+        "call-03-reschedule.txt",
+        "call-03-scheduling.txt",
+        "call-04-refill.txt",
+        "call-04-reschedule.txt",
+        "call-05-refill.txt",
+        "call-05-reschedule.txt",
+        "call-07-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-existing_patient_persistent.txt",
+          "quote": "Right now, I can only assist if you create a demo patient profile. Would you like to set one up?"
+        },
+        {
+          "source": "call-01-scheduling.txt",
+          "quote": "Alex. Since I don't have a patient profile for you yet, would you like to create a demo patient profile now?"
+        },
+        {
+          "source": "call-02-existing_patient_persistent.txt",
+          "quote": "Would you like to create a demo patient profile? (L7), At this booth, I don't see an existing profile for you yet. (L11), Would you like to create a demo patient profile now? (L12), At this booth, I don't have access to your full patient records yet. (L17), To help you here, I'll need to create a demo patient profile for you. (L18), Would you like to do that now? (L19), At this booth, I can't access the main patient database. (L24), To help you today, I'll need to set up a demo patient profile. (L26), Would you like to do that now? (L27)"
+        }
+      ],
+      "manual_ref": "BUG-01"
+    },
+    {
+      "id": "broken_transfer",
+      "title": "Broken / dead-end transfer",
+      "severity": "Critical",
+      "severity_justification": "The agent offered and the patient accepted a transfer to live support, but the agent instead attempted to book an appointment.",
+      "reproduction": "6/25",
+      "count": 6,
+      "analyzed": 25,
+      "sources": [
+        "call-01-existing_patient_persistent.txt",
+        "call-01-info.txt",
+        "call-02-reschedule.txt",
+        "call-03-reschedule.txt",
+        "call-03-scheduling.txt",
+        "call-06-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-existing_patient_persistent.txt",
+          "quote": "It looks like you'd like to book a routine checkup. One moment while I get that started for you."
+        },
+        {
+          "source": "call-01-info.txt",
+          "quote": "Please wait. Hello. You've reached the Pretty Good AI test line. Goodbye."
+        },
+        {
+          "source": "call-02-reschedule.txt",
+          "quote": "You've reached the Pretty Good AI test line."
+        }
+      ],
+      "manual_ref": "BUG-08, BUG-13"
+    },
+    {
+      "id": "premature_call_termination",
+      "title": "Premature call termination",
+      "severity": "Critical",
+      "severity_justification": "The agent ended the call without addressing the patient's initial request to book a check-up.",
+      "reproduction": "2/25",
+      "count": 2,
+      "analyzed": 25,
+      "sources": [
+        "call-01-scheduling.txt",
+        "call-04-refill.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-scheduling.txt",
+          "quote": "I'm going to end the call now."
+        },
+        {
+          "source": "call-04-refill.txt",
+          "quote": "No problem. You can scan the QR code at the booth to create a profile later if you'd like. Have a great day."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "data_inconsistency",
+      "title": "Data inconsistency",
+      "severity": "Critical",
+      "severity_justification": "The agent contradicted itself regarding the existence of the patient's appointment with Dr. Patel.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-05-reschedule.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-05-reschedule.txt",
+          "quote": "I don't see any upcoming appointments with doctor Patel on your record."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "missing_confirmation",
+      "title": "Missing confirmation",
+      "severity": "Critical",
+      "severity_justification": "The agent collected all necessary information for the refill request but did not confirm that the request was submitted, accepted, or what the next steps would be.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-01-refill.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-refill.txt",
+          "quote": "Thanks."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "context_loss",
+      "title": "Context loss",
+      "severity": "Major",
+      "severity_justification": "After creating the profile, the agent lost the context of the patient's original request to book a check-up and asked how it could help again.",
+      "reproduction": "3/25",
+      "count": 3,
+      "analyzed": 25,
+      "sources": [
+        "call-01-scheduling.txt",
+        "call-04-reschedule.txt",
+        "call-07-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-scheduling.txt",
+          "quote": "How may I help you today?"
+        },
+        {
+          "source": "call-04-reschedule.txt",
+          "quote": "How may I help you today?"
+        },
+        {
+          "source": "call-07-scheduling.txt",
+          "quote": "How may I help you today?"
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "info_gated_behind_profile",
+      "title": "Info gated behind profile creation",
+      "severity": "Major",
+      "severity_justification": "The agent attempted to create a patient profile when asked a simple informational question about clinic hours, implying the information might be available after profile creation.",
+      "reproduction": "2/25",
+      "count": 2,
+      "analyzed": 25,
+      "sources": [
+        "call-01-info.txt",
+        "call-04-info.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-info.txt",
+          "quote": "Would you like to create a demo patient profile? That way I can help you with more details and services."
+        },
+        {
+          "source": "call-04-info.txt",
+          "quote": "Would you like to create a demo patient profile? I just need your first and last name,"
+        }
+      ],
+      "manual_ref": "BUG-11"
+    },
+    {
+      "id": "provider_name_instability",
+      "title": "Provider name instability",
+      "severity": "Major",
+      "severity_justification": "The provider's name changed multiple times within the same call, leading to inconsistency.",
+      "reproduction": "2/25",
+      "count": 2,
+      "analyzed": 25,
+      "sources": [
+        "call-02-scheduling.txt",
+        "call-03-out_of_scope.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-02-scheduling.txt",
+          "quote": "We have an opening for a routine checkup on Wednesday, July first, at three thirty PM with Zeebigniew Vukosky, MD."
+        },
+        {
+          "source": "call-03-out_of_scope.txt",
+          "quote": "Pinna Point Orthopaedics focuses on joint, muscle, and bone care."
+        }
+      ],
+      "manual_ref": "BUG-04"
+    },
+    {
+      "id": "unclear_rejection",
+      "title": "Unclear rejection",
+      "severity": "Major",
+      "severity_justification": "The agent did not explicitly state that the clinic is closed on Sundays, instead pivoting to 'another day' after the patient mentioned the closure.",
+      "reproduction": "2/25",
+      "count": 2,
+      "analyzed": 25,
+      "sources": [
+        "call-01-out_of_scope.txt",
+        "call-02-out_of_scope.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-01-out_of_scope.txt",
+          "quote": "No problem. Would you like to look for the next available appointment on another day? Or do you want to make changes to your current booking?"
+        },
+        {
+          "source": "call-02-out_of_scope.txt",
+          "quote": "No problem."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "appointment_search_failure",
+      "title": "Appointment search failure",
+      "severity": "Major",
+      "severity_justification": "The agent failed to find a morning appointment for 'next week' as requested, first offering an afternoon slot for a different week, then claiming no morning slots existed for 'next week'.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-02-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-02-scheduling.txt",
+          "quote": "It looks like there are no morning openings next week. The earliest available slot is still Wednesday, July first, at three thirty PM with Zeebigniew Lewkowski, MD."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "failure_to_recognize_info",
+      "title": "Failure to recognize info",
+      "severity": "Minor",
+      "severity_justification": "The agent asked for the patient's first and last name after the patient had already provided it at the beginning of the call.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-04-refill.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-04-refill.txt",
+          "quote": "I just need your first and last name to get started."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "misstated_information",
+      "title": "Misstated information",
+      "severity": "Minor",
+      "severity_justification": "The agent misstated the insurance plan type as 'PPE' when the patient specified 'PPO'.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-03-info.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-03-info.txt",
+          "quote": "Yes. Pivot Point Orthopaedics accepts most insurance plans, including Blue Cross Blue Shield PPE If you need to update your insurance, or have more questions about coverage, just let me know."
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "redundant_dob_update_request",
+      "title": "Redundant dob update request",
+      "severity": "Minor",
+      "severity_justification": "The agent asked to update the patient's date of birth after it had already been provided and confirmed earlier in the call.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-02-scheduling.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-02-scheduling.txt",
+          "quote": "Would you like me to update your date of birth to March fourteenth nineteen ninety in your record?"
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "redundant_prompts",
+      "title": "Redundant prompts",
+      "severity": "Minor",
+      "severity_justification": "The agent asked 'How may I help you today?' after the patient had already clearly stated their reason for calling.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-05-refill.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-05-refill.txt",
+          "quote": "How may I help you today?"
+        }
+      ],
+      "manual_ref": null
+    },
+    {
+      "id": "unnecessary_data_collection_push",
+      "title": "Unnecessary data collection push",
+      "severity": "Minor",
+      "severity_justification": "After answering the patient's simple 'do you accept' insurance question, the agent repeatedly pushed to collect insurance details or upload a card, despite the patient indicating their question was answered.",
+      "reproduction": "1/25",
+      "count": 1,
+      "analyzed": 25,
+      "sources": [
+        "call-04-info.txt"
+      ],
+      "examples": [
+        {
+          "source": "call-04-info.txt",
+          "quote": "Would you like to receive a text message at a number ending in three nine five eight to upload photos of your Blue Cross Blue Shield PPO card?"
+        }
+      ],
+      "manual_ref": null
+    }
+  ]
+}
