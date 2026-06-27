@@ -32,42 +32,49 @@ cross-checked by the hand-verified `analysis/candidate-bugs.md` and curated into
 
 ## Block diagram
 
-```
-            ┌────────────────────────────────────────────────┐
-            │  TEST DRIVER (local)                            │
-            │  caller/batch_runner.py  ·  scenarios/scenarios.py │
-            └───────────────────────┬────────────────────────┘
-                                    │ dispatch (scenario_id in job metadata)
-                                    v
-   ┌──────────────────────────────────────────────────────────────────┐
-   │  LIVEKIT CLOUD                                                     │
-   │                                                                    │
-   │   Agent Dispatch ──> outbound-caller worker  (caller/agent.py)     │
-   │                          │                                         │
-   │     ┌────────────────────┴── AgentSession: patient bot ────────┐  │
-   │     │  Deepgram STT ──> Gemini 2.5 Flash ──> Cartesia TTS       │  │
-   │     │  Silero VAD + LiveKit turn detector · BVCTelephony NC      │  │
-   │     │  (listen-first — the clinic agent speaks first)           │  │
-   │     └───────────────────────────────────────────────────────────┘  │
-   │                          │                                         │
-   │   SIP service            └── record=True ──> Cloud audio (insights)│
-   └───────────┬────────────────────────────────────────────────────────┘
-               │ outbound call via trunk ST_…
-               v
-   ┌───────────────┐      ┌──────┐      ┌──────────────────────────┐
-   │ Telnyx SIP    │ ───> │ PSTN │ ───> │ CLINIC VOICE AGENT       │
-   │ trunk         │ <─── │      │ <─── │ (system under test)      │
-   └───────────────┘      └──────┘      └──────────────────────────┘
+```mermaid
+flowchart TD
+    subgraph DRIVER["Test driver (local)"]
+        SC["scenarios/scenarios.py<br/>PatientScenario + build_instructions()"]
+        BR["caller/batch_runner.py<br/>sequential driver"]
+    end
 
-   Outputs ─ recordings/*.txt (transcripts) + Cloud audio (downloaded
-             to recordings/audio recordings/)
-                          │
-                          v
-   ┌──────────────────────────────────────────────────────────────────┐
-   │  ANALYSIS (offline)                                               │
-   │  analysis/analyze.py ─ score vs success_criteria + dedupe bugs ─> │
-   │  analysis/findings.{md,json} ─> candidate-bugs.md ─> BUG_REPORT.md │
-   └──────────────────────────────────────────────────────────────────┘
+    subgraph CLOUD["LiveKit Cloud"]
+        DISP["Agent Dispatch"]
+        WORKER["outbound-caller worker<br/>caller/agent.py"]
+        subgraph PIPE["AgentSession · patient bot · listen-first"]
+            STT["Deepgram STT"] --> LLM["Gemini 2.5 Flash"] --> TTS["Cartesia TTS"]
+            TURN["Silero VAD + LiveKit turn detector<br/>BVCTelephony noise cancellation"]
+        end
+        SIP["SIP service"]
+        REC["Recording (record=True)<br/>Cloud audio / Agent insights"]
+    end
+
+    subgraph TEL["Telephony"]
+        TRUNK["Telnyx SIP trunk (ST_...)"]
+        PSTN["PSTN"]
+        CLINIC["Clinic voice agent<br/>(system under test)"]
+        TRUNK <--> PSTN
+        PSTN <--> CLINIC
+    end
+
+    subgraph OUT["Analysis (offline)"]
+        TX["recordings/*.txt transcripts"]
+        AN["analysis/analyze.py<br/>score vs success_criteria + dedupe"]
+        FIND["analysis/findings.md / .json"]
+        REP["BUG_REPORT.md"]
+        TX --> AN --> FIND --> REP
+    end
+
+    SC --> BR
+    BR -->|scenario_id in job metadata| DISP
+    DISP --> WORKER
+    WORKER --> STT
+    WORKER --> SIP
+    WORKER --> REC
+    SIP -->|outbound call| TRUNK
+    WORKER -->|transcript| TX
+    REC -.->|download| TX
 ```
 
 ## Components
